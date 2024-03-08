@@ -34,7 +34,6 @@ public class MovableBox extends PaintableBox implements Movable {
 
     public void move() {
         moveTo(getX() + getDX(), getY() + getDY());
-        logger.trace("{} : {}, {}, {}, {}", getId(), getX(), getY(), getRegion().getX(), getRegion().getY());
     }
 
     public void moveTo(int x, int y) {
