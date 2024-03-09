@@ -16,12 +16,7 @@ public class TestWorld {
     static final int MAX_MOVE_COUNT = 0;
     static final int DT = 10;
     static final int WALL_THICKNESS = 100;
-    static final Color[] COLOR_TABLE = {
-            Color.BLACK,
-            Color.RED,
-            Color.BLUE,
-            Color.YELLOW
-    };
+    static final int MAX_BRICK_LIFE = 4;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
@@ -44,12 +39,37 @@ public class TestWorld {
         world.add(new PaintableBox(FRAME_WIDTH / 2, FRAME_HEIGHT + WALL_THICKNESS / 2,
                 FRAME_WIDTH + 2 * WALL_THICKNESS, WALL_THICKNESS));
 
-        for(int i = 1; i <= FRAME_HEIGHT / BOX_HEIGHT; i++) {
-                for(int j = 1; j <= FRAME_WIDTH / BOX_WIDTH; j++) {
-                        world.add(new BreakableBox(BOX_WIDTH / 2 * j, BOX_HEIGHT / 2 * i, BOX_WIDTH, BOX_HEIGHT, Color.RED));              
+        for(int i = 0; i < FRAME_HEIGHT / BOX_HEIGHT / 2; i++) {
+                for(int j = 0; j < FRAME_WIDTH / BOX_WIDTH; j++) {
+                        int lifeCount = r.nextInt(MAX_BRICK_LIFE) + 1;
+                        Color boxColor = null;
+                        switch (lifeCount) {
+                                case 1:
+                                        boxColor = Color.BLUE;
+                                        break;
+                                case 2:
+                                        boxColor = Color.GREEN;
+                                        break;
+                                case 3:
+                                        boxColor = Color.RED;
+                                        break;
+                                case 4:
+                                        boxColor = Color.BLACK;
+                                        break;
+                                default:
+                                        break;
+                        }
+
+                        world.add(new BreakableBox(BOX_WIDTH * j, BOX_HEIGHT * i,
+                                BOX_WIDTH, BOX_HEIGHT, lifeCount, boxColor));              
                 }
         }
         
+        BoundedBall ball = new BoundedBall(600, 600, 5, Color.BLUE);
+        ball.setDX(5);
+        ball.setDY(7);
+        world.add(ball);
+        world.addControlBar(new PaintableBox(350 - 30, 700 - 10, 80, 10));
         frame.setVisible(true);
 
         world.setMaxMoveCount(MAX_MOVE_COUNT);

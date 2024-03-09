@@ -27,21 +27,40 @@ public class MovableWorld extends World {
                 Regionable object = get(i);
                 if (object instanceof Movable) {
                     ((Movable) object).move();
-
-                    if (object instanceof Bounded) {
-                        for (int j = 0; j < getCount(); j++) {
-                            Regionable other = get(j);
-
-                            if ((object != other) && (object.getRegion().intersects(other.getRegion()))) {
-                                ((Bounded) object).bounce(other);
-                            }
-                        }
-                    }
+                    checkCollisions(object);
+                    checkControlBarCollision(object);
                 }
             }
-
+    
             moveCount++;
             repaint();
+        }
+    }
+    
+    private void checkCollisions(Regionable object) {
+        if (object instanceof Bounded) {
+            for (int j = 0; j < getCount(); j++) {
+                Regionable other = get(j);
+                if ((object != other) && (object.getRegion().intersects(other.getRegion()))) {
+                    ((Bounded) object).bounce(other);
+                    checkBreakableCollision(other);
+                }
+            }
+        }
+    }
+    
+    private void checkBreakableCollision(Regionable other) {
+        if (other instanceof Breakable) {
+            ((Breakable) other).breakDown();
+            if (((Breakable) other).getLifeCount() == 0) {
+                remove(other);
+            }
+        }
+    }
+    
+    private void checkControlBarCollision(Regionable object) {
+        if (object.getRegion().intersects(getControlBar().getRegion())) {
+            ((Bounded) object).bounce(getControlBar());
         }
     }
 

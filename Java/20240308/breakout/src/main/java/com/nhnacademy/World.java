@@ -2,17 +2,18 @@ package com.nhnacademy;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.List;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-public class World extends JPanel implements MouseListener{
+public class World extends JPanel implements MouseMotionListener{
     List<Regionable> regionableList = new LinkedList<>();
+    private PaintableBox controlBar;
 
     public World() {
-        addMouseListener(this);
+        addMouseMotionListener(this);
     }
     /**
      *
@@ -24,14 +25,15 @@ public class World extends JPanel implements MouseListener{
             throw new IllegalArgumentException();
         }
 
-        for (Regionable item : regionableList) {    
-            if(((object instanceof Bounded) || (item instanceof Bounded)) && object.getRegion().intersects(item.getRegion())) {
-                throw new IllegalArgumentException();
-            }
-            
-        }
-
         regionableList.add(object);
+    }
+
+    public void addControlBar(Regionable object) {
+        if(object == null) {
+            throw new IllegalArgumentException();
+        }
+        
+        this.controlBar = (PaintableBox) object;
     }
 
     public void remove(Regionable object) {
@@ -51,6 +53,10 @@ public class World extends JPanel implements MouseListener{
         return regionableList.get(index);
     }
 
+    public PaintableBox getControlBar() {
+        return this.controlBar;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -60,26 +66,30 @@ public class World extends JPanel implements MouseListener{
                 ((Paintable) object).paint(g);
             }
         }
+
+        controlBar.paint(g);
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        add(new PaintableBox(e.getX(), e.getY(), 50, 50));
+    public void mouseDragged(MouseEvent e) {
+        moveControlBar(e.getX());
+    }
+
+    private void moveControlBar(int x) {
+        int barX = x - controlBar.getWidth() / 2;
+
+        if (barX < 0) {
+            barX = 0;
+        } else if (barX > getWidth() - getControlBar().getWidth()) {
+            barX = getWidth() - getControlBar().getWidth();
+        }
+
+        addControlBar(new PaintableBox(barX, getControlBar().getY(), getControlBar().getWidth(), getControlBar().getHeight()));
+        repaint();
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseMoved(MouseEvent e) {
+        
     }
 }
