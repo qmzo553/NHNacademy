@@ -87,8 +87,6 @@ public class TestWorld {
 
                 ball.setDX(dx);
                 ball.setDY(dy);
-                box.setDX(dx);
-                box.setDY(dy);
 
                 world.add(box);
                 world.add(ball);
