@@ -29,6 +29,7 @@ public class MovableWorld extends World {
                     ((Movable) object).move();
                     checkCollisions(object);
                     checkControlBarCollision(object);
+                    checkDrop(object);
                 }
             }
     
@@ -61,6 +62,12 @@ public class MovableWorld extends World {
     private void checkControlBarCollision(Regionable object) {
         if (object.getRegion().intersects(getControlBar().getRegion())) {
             ((Bounded) object).bounce(getControlBar());
+        }
+    }
+
+    private void checkDrop(Regionable object) {
+        if(object.getY() > getHeight()) {
+            remove(object);
         }
     }
 
