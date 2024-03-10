@@ -1,9 +1,12 @@
 package com.nhnacademy;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 public class GameWorld {
@@ -22,14 +25,20 @@ public class GameWorld {
     static final int DT = 10;
     static final int WALL_THICKNESS = 100;
     static final int MAX_BRICK_LIFE = 4;
+    static final int CONTROLBAR_X = 430;
+    static final int CONTROLBAR_Y = 690;
+    static final int CONTROLBAR_WIDTH = 80;
+    static final int CONTROLBAR_HEIGHT = 10;
 
     private static Random r = new Random();
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
 
+        frame.setTitle("BreakOut Game");
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
         MovableWorld world = new MovableWorld();
         setWorld(world);
@@ -99,6 +108,6 @@ public class GameWorld {
     }
 
     public static void setControlBar(MovableWorld world) {
-        world.addControlBar(new PaintableBox(350 + 80, 700 - 10, 80, 10));
+        world.addControlBar(new MovableBox(CONTROLBAR_X, CONTROLBAR_Y, CONTROLBAR_WIDTH, CONTROLBAR_HEIGHT));
     }
 }

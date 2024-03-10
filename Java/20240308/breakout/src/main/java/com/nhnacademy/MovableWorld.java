@@ -1,6 +1,12 @@
 package com.nhnacademy;
 
+import java.util.Random;
+
 public class MovableWorld extends World {
+    static final int CONTROLBAR_MAX_WIDTH = 80;
+    static final int CONTROLBAR_MIN_WIDTH = 50;
+
+    private Random r = new Random();
     static final int DEFAULT_DT = 10;
     int moveCount;
     int maxMoveCount = 0;
@@ -14,11 +20,27 @@ public class MovableWorld extends World {
     }
 
     public int getDT() {
-        return dt;
+        return this.dt;
+    }
+
+    public int getMoveCount() {
+        return this.moveCount;
+    }
+
+    public int getMaxMoveCount() {
+        return this.maxMoveCount;
+    }
+
+    public void setMaxMoveCount(int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        this.maxMoveCount = count;
     }
 
     public void reset() {
-        moveCount = 0;
+        this.moveCount = 0;
     }
 
     public void move() {
@@ -33,7 +55,7 @@ public class MovableWorld extends World {
                 }
             }
     
-            moveCount++;
+            this.moveCount++;
             repaint();
         }
     }
@@ -62,6 +84,9 @@ public class MovableWorld extends World {
     private void checkControlBarCollision(Regionable object) {
         if (object.getRegion().intersects(getControlBar().getRegion())) {
             ((Bounded) object).bounce(getControlBar());
+
+            addControlBar(new MovableBox(getControlBar().getX(), getControlBar().getY(),
+                r.nextInt(CONTROLBAR_MAX_WIDTH - CONTROLBAR_MIN_WIDTH) + CONTROLBAR_MIN_WIDTH, getControlBar().getHeight()));
         }
     }
 
@@ -81,21 +106,4 @@ public class MovableWorld extends World {
             }
         }
     }
-
-    public int getMoveCount() {
-        return moveCount;
-    }
-
-    public int getMaxMoveCount() {
-        return maxMoveCount;
-    }
-
-    public void setMaxMoveCount(int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException();
-        }
-
-        maxMoveCount = count;
-    }
-
 }

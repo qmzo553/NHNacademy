@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class World extends JPanel implements MouseMotionListener{
     List<Regionable> regionableList = new LinkedList<>();
-    private PaintableBox controlBar;
+    private MovableBox controlBar;
 
     public World() {
         addMouseMotionListener(this);
@@ -28,12 +28,12 @@ public class World extends JPanel implements MouseMotionListener{
         regionableList.add(object);
     }
 
-    public void addControlBar(Regionable object) {
+    public void addControlBar(MovableBox object) {
         if(object == null) {
             throw new IllegalArgumentException();
         }
         
-        this.controlBar = (PaintableBox) object;
+        this.controlBar = object;
     }
 
     public void remove(Regionable object) {
@@ -84,7 +84,7 @@ public class World extends JPanel implements MouseMotionListener{
             barX = getWidth() - getControlBar().getWidth();
         }
 
-        addControlBar(new PaintableBox(barX, getControlBar().getY(), getControlBar().getWidth(), getControlBar().getHeight()));
+        controlBar.moveTo(barX, getControlBar().getY());
         repaint();
     }
 
