@@ -1,15 +1,15 @@
 package com.nhnacademy;
 
 public class Data {
-    
+
     private String packet;
     private boolean transfer = true;
 
     public synchronized String receive() {
-        while(transfer) {
+        while (transfer) {
             try {
                 wait();
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Thread Interrupted");
             }
@@ -22,10 +22,10 @@ public class Data {
     }
 
     public synchronized void send(String packet) {
-        while(!transfer) {
+        while (!transfer) {
             try {
                 wait();
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Thread Interrupted");
             }
