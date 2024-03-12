@@ -4,6 +4,10 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Producer implements Runnable {
+
+    static final int MIN_TIME = 1000;
+    static final int MAX_TIME = 10000;
+
     StoreItem[] storeItems;
     Store store;
     Thread thread;
@@ -26,7 +30,7 @@ public class Producer implements Runnable {
             store.buy(storeItems[random.nextInt(storeItems.length)]);
             
             try {
-                Thread.sleep(ThreadLocalRandom.current().nextInt(100, 1000));
+                Thread.sleep(ThreadLocalRandom.current().nextInt(MIN_TIME, MAX_TIME));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.err.println("Thread Interrupted");

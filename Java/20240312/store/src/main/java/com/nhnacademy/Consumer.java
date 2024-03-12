@@ -3,6 +3,9 @@ package com.nhnacademy;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
+
+    static final int MIN_TIME = 1000;
+    static final int MAX_TIME = 10000;
     Store store;
     Thread thread;
 
@@ -21,7 +24,7 @@ public class Consumer implements Runnable {
             store.enter();
             store.sell();
             store.exit();
-            Thread.sleep(ThreadLocalRandom.current().nextInt(100, 1000));
+            Thread.sleep(ThreadLocalRandom.current().nextInt(MIN_TIME, MAX_TIME));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.err.println("Thread Interrupted");
