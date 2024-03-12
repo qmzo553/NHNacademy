@@ -2,10 +2,11 @@ package com.nhnacademy;
 
 public class Test {
     
+    static final int CONSUMER_NUM = 10;
     public static void main(String[] args) {
         Store store = new Store();
         Producer producer = new Producer(store);
-        Consumer[] consumers = new Consumer[10];
+        Consumer[] consumers = new Consumer[CONSUMER_NUM];
 
         producer.start();
 

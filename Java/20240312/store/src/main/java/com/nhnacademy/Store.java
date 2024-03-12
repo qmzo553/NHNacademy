@@ -7,13 +7,13 @@ import java.util.Random;
 public class Store {
 
     int consumerNum = 0;
-    List<String> martItems;
-    private final Object lock = new Object(); // 동기화를 위한 객체
-    private final int MAX_CONSUMER = 5;
+    List<StoreItem> storeItems;
+    Object lock = new Object();
+    static final int MAX_CONSUMER = 5;
     Random random;
 
     public Store() {
-        martItems = new LinkedList<>();
+        storeItems = new LinkedList<>();
         random = new Random();
     }
 
@@ -24,7 +24,6 @@ public class Store {
     public void enter() throws InterruptedException {
         synchronized (lock) {
             while (consumerNum > MAX_CONSUMER) {
-                // 최대 입장자수를 초과하면 대기
                 System.out.println(Thread.currentThread().getName() + " 대기 중...");
                 lock.wait();
             }
@@ -37,19 +36,15 @@ public class Store {
         synchronized (lock) {
             consumerNum--;
             System.out.println(Thread.currentThread().getName() + " 퇴장");
-            lock.notifyAll(); // 대기 중인 스레드에게 입장할 수 있도록 알림
+            lock.notifyAll();
         }
     }
 
     private boolean checkMartItemQuantity() {
-        return martItems.size() == 10;
+        return storeItems.size() == 10;
     }
 
-    private boolean checkConsumerNum() {
-        return consumerNum >= 5;
-    }
-
-    public synchronized void buy(String martItem) {
+    public synchronized void buy(StoreItem storeItem) {
         while (checkMartItemQuantity()) {
             try {
                 wait();
@@ -59,8 +54,8 @@ public class Store {
             }
         }
     
-        martItems.add(martItem);
-        System.out.println(martItem + "을 납품 받았습니다.");
+        storeItems.add(storeItem);
+        System.out.println(storeItem.getItemName() + "을 납품 받았습니다.");
         notifyAll();
     }
     
@@ -74,9 +69,9 @@ public class Store {
             }
         }
     
-        String sellMartItem = martItems.get(random.nextInt(martItems.size()));
-        martItems.remove(sellMartItem);
-        System.out.println(Thread.currentThread().getName() + "이 " + sellMartItem + "를 구매했습니다.");
+        StoreItem sellStoreItem = storeItems.get(random.nextInt(storeItems.size()));
+        storeItems.remove(sellStoreItem);
+        System.out.println(Thread.currentThread().getName() + "이 " + sellStoreItem + "를 구매했습니다.");
         notifyAll();
     }
 }
