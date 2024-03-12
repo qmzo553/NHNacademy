@@ -8,10 +8,11 @@ public class LivelockExample {
     private Lock lock1 = new ReentrantLock(true);
     private Lock lock2 = new ReentrantLock(true);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         LivelockExample livelock = new LivelockExample();
 
         new Thread(livelock::operation1, "T1").start();
+        Thread.sleep(5);
         new Thread(livelock::operation2, "T2").start();
 
     }
