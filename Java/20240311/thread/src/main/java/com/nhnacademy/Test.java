@@ -13,7 +13,8 @@ public class Test {
         RunnableCounter counter2 = new RunnableCounter("Runnable Counter2", 10);
         // Thread thread1 = new Thread(counter1);
         // Thread thread2 = new Thread(counter2);
-
+        
+        
         System.out.println("start : " + LocalTime.now());
         // counter.run();
         // threadCounter.start();
