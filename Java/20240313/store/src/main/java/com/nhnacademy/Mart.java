@@ -8,12 +8,12 @@ import java.util.concurrent.Executors;
 
 public class Mart {
 
-    static final int CONSUMER_NUM = 5;
+    static final int CONSUMER_NUM = 10;
     static final int MAX_CONSUMER_NUM = 100;
     static final int PRODUCER_NUM = 10;
     static final int MAX_PRODUCER_NUM = 100;
-    static final int STORE_MAXNUM = 5;
-    static final int STORE_MINNUM = 1;
+    static final int MAX_STORE_NUM = 5;
+    static final int MINSTORE_NUM = 1;
     List<Store> storeList;
     Random random;
 
@@ -51,14 +51,14 @@ public class Mart {
     }
 
     private void inittStoreList() {
-        for(int i = 0; i < STORE_MAXNUM; i++) {
-            storeList.add(new Store(i + "번 Store"));
+        for(int i = 0; i < MAX_STORE_NUM; i++) {
+            storeList.add(new Store("Store " + i));
         }
     }
 
     public List<Store> getStoreList() {
         List<Store> randomList = new LinkedList<>();
-        int storeNum = random.nextInt(STORE_MAXNUM - STORE_MINNUM) + STORE_MINNUM;
+        int storeNum = random.nextInt(MAX_STORE_NUM - MINSTORE_NUM) + MINSTORE_NUM;
 
         for(int i = 0; i < storeNum; i++) {
             Store store = storeList.get(random.nextInt(storeList.size()));

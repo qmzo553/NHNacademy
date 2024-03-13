@@ -13,6 +13,10 @@ public class Consumer implements Runnable {
         this.mart = mart;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void run() {
         storeList = mart.getStoreList();
@@ -22,12 +26,11 @@ public class Consumer implements Runnable {
                 store.enter();
                 store.sell();
                 store.exit();
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Thread interrupted");
             }
         }
-
-        System.out.println(name + " Consumer 종료");
     }
 }
