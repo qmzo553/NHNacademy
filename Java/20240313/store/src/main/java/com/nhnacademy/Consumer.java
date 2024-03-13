@@ -1,41 +1,33 @@
 package com.nhnacademy;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
 
-    static final int MIN_TIME = 100;
-    static final int MAX_TIME = 1000;
-    List<StoreItem> shoppingList;
-    StoreItem[] storeItems;
-    Store store;
     String name;
+    Mart mart;
+    List<Store> storeList;
 
-    public Consumer(String name, Store store) {
+    public Consumer(String name, Mart mart) {
         this.name = name;
-        this.store = store;
-        storeItems = StoreItem.values();
-
-        initShoppingList();
-    }
-
-    private void initShoppingList() {
-        for(int i = 0; i < random.nextInt(storeItems.length); i++) {
-            shoppingList.add(storeItems[random.nextInt(storeItems.length)]);
-        }
+        this.mart = mart;
     }
 
     @Override
     public void run() {
-        try {
-            store.enter();
-            store.sell(shoppingList);
-            store.exit();
-            Thread.sleep(ThreadLocalRandom.current().nextInt(MIN_TIME, MAX_TIME));
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            System.err.println("Thread Interrupted");
+        storeList = mart.getStoreList();
+
+        for(Store store : storeList) {
+            try {
+                store.enter();
+                store.sell();
+                store.exit();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("Thread interrupted");
+            }
         }
+
+        System.out.println(name + " Consumer 종료");
     }
 }

@@ -25,7 +25,7 @@ public enum StoreItem {
         return itemName;
     }
 
-    public String getMaxItemNum() {
+    public int getMaxItemNum() {
         return maxItemNum;
     }
 }

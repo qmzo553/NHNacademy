@@ -1,110 +1,58 @@
 package com.nhnacademy;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 public class Store {
 
-    static final int WAIT_TIME = 500;
-    int consumerNum = 0;
-    Map<StoreItem, Integer> sellItems;
+    static final int MAX_PEOPLE = 5;
+    static final int MAX_ITEM = 10;
+    static final int WAIT_TIME = 1;
+
+    Semaphore storeSemaphore;
     Random random;
+    String name;
+    int cntPeopleCount = 0;
+    int storeItemNum = 0;
+    int buyNum = 0;
 
-    public Store() {
-        sellItems = new HashMap<>();
+    public Store(String name) {
+        this.name = name;
         random = new Random();
-
-        initStoreItems();
+        this.storeItemNum = random.nextInt(MAX_ITEM) + 1;
+        storeSemaphore = new Semaphore(MAX_PEOPLE);
     }
 
-    private void initStoreItems() {
-        for(int i = 0; i < StoreItem.values().length; i++) {
-            StoreItem storeItem = StoreItem.values()[i];
-            sellItems.put(storeItem, 0);
-        }
+    public void enter() throws InterruptedException {
+        storeSemaphore.acquire();
+        cntPeopleCount++;
+        System.out.println(name + "에 입장, 현재 인원수 : " + cntPeopleCount + "명");
     }
 
-    public int getConsumerNum() {
-        return this.consumerNum;
+    public void exit() {
+        storeSemaphore.release();
+        cntPeopleCount--;
+        System.out.println(name + "에서 퇴장, 현재 인원수 : " + cntPeopleCount + "명");
     }
 
-    public synchronized void enter() throws InterruptedException {
-        while (consumerNum >= MAX_CONSUMER) {
-            System.out.println(Thread.currentThread().getName() + " 대기 중...");
-            wait();
+    public void buy() throws InterruptedException {
+        if (buyNum >= storeItemNum && (!storeSemaphore.tryAcquire(WAIT_TIME, TimeUnit.SECONDS))) {
+            System.out.println("Producer - 납품 포기(시간초과)");
+            return;
         }
-        consumerNum++;
-        System.out.println(Thread.currentThread().getName() + " 입장");
+
+        buyNum++;
+        System.out.println("납품 받았습니다.");
     }
 
-    public synchronized void exit() {
-        consumerNum--;
-        System.out.println(Thread.currentThread().getName() + " 퇴장");
-        notifyAll();
-    }
-
-    public synchronized void buy(List<StoreItem> deliveryItems) {
-        while (checkDeliveryItemQuantity(deliveryItems)) {
-            try {
-                wait(WAIT_TIME);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Thread interrupted");
-            }
+    public void sell() throws InterruptedException {
+        if (buyNum < 0 && (!storeSemaphore.tryAcquire(WAIT_TIME, TimeUnit.SECONDS))) {
+            System.out.println("Consumer - 구매 포기(시간초과)");
+            return;
         }
 
-        for(StoreItem storeItem : deliveryItems) {
-            sellItems.put(storeItem, sellItems.get(storeItem) + 1);
-            System.out.println(storeItem.getItemName() + "을 납품 받았습니다.");
-        }
-        
-        notifyAll();
-    }
-
-    private boolean checkDeliveryItemQuantity(List<StoreItem> deliveryItems) {
-        boolean flag = false;
-        for(StoreItem storeItem : deliveryItems) {
-            if(sellItems.get(storeItem) == storeItem.getMaxItemNum()) {
-                flag = true;
-                return flag;
-            } else {
-                flag = false;
-            }
-        }
-
-        return flag;
-    }
-
-    public synchronized void sell(List<StoreItem> shoppingList) {
-        while (checkShoppingItemQuantity(shoppingList)) {
-            try {
-                wait(WAIT_TIME);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Thread interrupted");
-            }
-        }
-
-        for(StoreItem storeItem : shoppingList) {
-            sellItems.put(storeItem, sellItems.get(storeItem) - 1);
-            System.out.println(Thread.currentThread().getName() + "이 " + sellStoreItem + "를 구매했습니다.");
-        }
-        
-        notifyAll();
-    }
-
-    private boolean checkShoppingItemQuantity(List<StoreItem> shoppingList) {
-        boolean flag = false;
-        for(StoreItem storeItem : shoppingList) {
-            if(sellItems.get(storeItem) == 0) {
-                flag = true;
-                return flag;
-            } else {
-                flag = false;
-            }
-        }
-
-        return flag;
+        buyNum--;
+        System.out.println(Thread.currentThread().getName() + "이 구매했습니다.");
     }
 }

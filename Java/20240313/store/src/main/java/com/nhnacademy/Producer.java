@@ -1,46 +1,35 @@
 package com.nhnacademy;
 
+import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Producer implements Runnable {
 
-    static final int MIN_TIME = 100;
-    static final int MAX_TIME = 1000;
-
-    List<StoreItem> deliveryItems;
-    StoreItem[] storeItems;
-    Store store;
+    Mart mart;
     String name;
+    List<Store> storeList;
     Random random;
 
-    public Producer(String name, Store store) {
+    public Producer(String name, Mart mart) {
         this.name = name;
-        this.store = store;
-        random = new Random();
-        storeItems = StoreItem.values();
-        deliveryItems = new LinkedList<>();
-
-        initDeliveryItems();
-    }
-
-    private void initDeliveryItems() {
-        for(int i = 0; i < random.nextInt(storeItems.length); i++) {
-            deliveryItems.add(storeItems[random.nextInt(storeItems.length)]);
-        }
+        this.mart = mart;
     }
 
     @Override
     public void run() {
-        while(thread.getState() != Thread.State.WAITING) {
-            store.buy(deliveryItems);
-            
+        storeList = mart.getStoreList();
+
+        for(Store store : storeList) {
             try {
-                Thread.sleep(ThreadLocalRandom.current().nextInt(MIN_TIME, MAX_TIME));
+                store.enter();
+                store.buy();
+                store.exit();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.err.println("Thread Interrupted");
+                System.out.println("Thread interrupted");
             }
         }
+
+        System.out.println(name + " Producer 종료");
     }
 }
