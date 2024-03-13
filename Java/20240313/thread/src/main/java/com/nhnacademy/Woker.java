@@ -17,6 +17,7 @@ public class Woker implements Runnable {
         try {
             Thread.sleep(1999);
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             e.printStackTrace();
         }
         System.out.println(getName() + " finished ");
