@@ -4,8 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
 
-    static final int MIN_TIME = 1000;
-    static final int MAX_TIME = 10000;
+    static final int MIN_TIME = 100;
+    static final int MAX_TIME = 1000;
     Store store;
     Thread thread;
 

@@ -5,8 +5,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Producer implements Runnable {
 
-    static final int MIN_TIME = 1000;
-    static final int MAX_TIME = 10000;
+    static final int MIN_TIME = 100;
+    static final int MAX_TIME = 1000;
 
     StoreItem[] storeItems;
     Store store;
