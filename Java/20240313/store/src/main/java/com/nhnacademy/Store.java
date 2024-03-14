@@ -36,6 +36,7 @@ public class Store {
         sellSemaphore = new Semaphore(MAX_CONSUMER_NUM);
     }
 
+    // semaphore.availablePermits()
     public void enter() throws InterruptedException {
         storeSemaphore.acquire();
         cntConsumerNum++;
@@ -48,7 +49,7 @@ public class Store {
         logger.info("({}) 가 ({})에서 퇴장하였습니다. (인원수 : {}/{}명)", Thread.currentThread().getName(), name, cntConsumerNum, MAX_CONSUMER_NUM);
     }
 
-    public synchronized void buy() throws InterruptedException {
+    public void buy() throws InterruptedException {
         buySemaphore.acquire();
         if (cntStoreItemNum >= maxStoreItemNum || (!buySemaphore.tryAcquire(WAIT_TIME, TimeUnit.SECONDS))) {
             logger.log(Level.WARN, "({})가 ({})에서 납품 포기 했습니다.(시간 초과)", Thread.currentThread().getName(), name);
