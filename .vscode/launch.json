@@ -1,0 +1,103 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Main"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "GameWorld",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.GameWorld",
+            "projectName": "com.nhnacademy-breakout"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Main",
+            "projectName": "com.nhnacademy-regexdemo",
+            "args": [
+                "NHN",
+                "Academy",
+                "Back-End",
+                "NHN Academy Back-End"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "DrawTree",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.DrawTree",
+            "projectName": "com.nhnacademy-graphics"
+        },
+        {
+            "type": "java",
+            "name": "DrawTriAngle",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.DrawTriAngle",
+            "projectName": "com.nhnacademy-graphics"
+        },
+        {
+            "type": "java",
+            "name": "FrameDemo01",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.FrameDemo01",
+            "projectName": "com.nhnacademy-graphics"
+        },
+        {
+            "type": "java",
+            "name": "Main(1)",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Main",
+            "projectName": "com.nhnacademy-graphics"
+        },
+        {
+            "type": "java",
+            "name": "Main(2)",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Main",
+            "projectName": "com.nhnacademy-rational"
+        },
+        {
+            "type": "java",
+            "name": "TestWorld",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.TestWorld",
+            "projectName": "com.nhnacademy-rational"
+        },
+        {
+            "type": "java",
+            "name": "Main(3)",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Main",
+            "projectName": "com.nhnacademy-regularexdemo"
+        },
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Test",
+            "projectName": "com.nhnacademy-store"
+        },
+        {
+            "type": "java",
+            "name": "Test(1)",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Test",
+            "projectName": "com.nhnacademy-thread"
+        }
+    ]
+}
