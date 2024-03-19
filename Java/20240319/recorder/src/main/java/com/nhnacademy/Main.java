@@ -9,7 +9,21 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 public class Main {
+
+    static String userId;
+    static String userNickName;
+    static String itemId;
+    static String itemName;
+    static int itemEnergy;
+    static int itemPower;
+    static int itemDefense;
+    static int itemMovingSpeed;
+    static int itemAttackSpeed;
+    static String path;
+
     public static void main(String[] args) {
+        DataBase dataBase = new DataBase();
+        
         Options options = new Options();
         Option helpOption = new Option("h", false, "Help");
         options.addOption(helpOption);
@@ -46,9 +60,7 @@ public class Main {
 
         Option dataList = Option.builder("l")
                 .longOpt("list")
-                .hasArg()
-                .argName("Data List")
-                .desc("Add Data")
+                .desc("Show Data List")
                 .build();
         options.addOption(dataList);
 
@@ -112,25 +124,64 @@ public class Main {
 
         Option dbFile = Option.builder("f")
                 .longOpt("db-file")
-                .desc("Show DB File")
+                .hasArg()
+                .argName("Data Base Name")
+                .desc("Save To DB File Path")
                 .build();
         options.addOption(dbFile);
 
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine commandLine = parser.parse(options, args);
+
             if (commandLine.hasOption(helpOption.getOpt())) {
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp("recoder", options);
                 System.exit(0);
             } 
+
             if(commandLine.hasOption(addData.getOpt())) {
-                
+                String type = commandLine.getOptionValue(dataType.getOpt());
+                path = commandLine.getOptionValue(dbFile.getOpt());
+
+                if(type.equals("user")) {
+                    userId = commandLine.getOptionValue(dataId.getOpt());
+                    userNickName = commandLine.getOptionValue(dataName.getOpt());
+                    
+
+                    User user = new User(userId, userNickName);
+                    dataBase.addUser(user);
+                    dataBase.save(path);
+                } else if(type.equals("item")) {
+                    itemId = commandLine.getOptionValue(dataId.getOpt());
+                    itemName = commandLine.getOptionValue(dataName.getOpt());
+                    itemEnergy = Integer.parseInt(commandLine.getOptionValue(dataEnergy.getOpt()));
+                    itemPower = Integer.parseInt(commandLine.getOptionValue(dataPower.getOpt()));
+                    itemDefense = Integer.parseInt(commandLine.getOptionValue(dataDefense.getOpt()));
+                    itemMovingSpeed = Integer.parseInt(commandLine.getOptionValue(dataMovingSpeed.getOpt()));
+                    itemAttackSpeed = Integer.parseInt(commandLine.getOptionValue(dataAttackSpeed.getOpt()));
+
+                    Item item = new Item(itemId, itemName, itemEnergy, itemPower, itemDefense, itemMovingSpeed, itemAttackSpeed);
+                    dataBase.addItem(item);
+                    dataBase.save(path);
+                }
             }
+
+            if(commandLine.hasOption(dataList.getOpt())) {
+                String type = commandLine.getOptionValue(dataType.getOpt());
+                path = commandLine.getOptionValue(dbFile.getOpt());
+                dataBase.read(path);
+
+                if(type.equals("user")) {
+                    dataBase.printUsers();
+                } else if(type.equals("item")) {
+                    dataBase.printItems();
+                }
+            }
+            
         } catch (ParseException e) {
             System.err.println(e.getMessage());
             System.exit(0);
         }
-
     }
 }

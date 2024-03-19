@@ -25,4 +25,9 @@ public class User {
     public String getNickName() {
         return nickName;
     }
+
+    @Override
+    public String toString() {
+        return getUserId() + " " + getNickName();
+    }
 }

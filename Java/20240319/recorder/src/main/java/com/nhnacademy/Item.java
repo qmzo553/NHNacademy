@@ -1,22 +1,22 @@
 package com.nhnacademy;
 
 public class Item {
-    
+
     String itemId;
-    String model;
+    String name;
     int energy;
     int power;
     int defense;
-    int speed;
+    int movingSpeed;
     int attackSpeed;
 
-    public Item(String itemId, String model, int energy, int power, int defense, int speed, int attackSpeed) {
+    public Item(String itemId, String name, int energy, int power, int defense, int movingSpeed, int attackSpeed) {
         this.itemId = itemId;
-        this.model = model;
+        this.name = name;
         this.energy = energy;
         this.power = power;
         this.defense = defense;
-        this.speed = speed;
+        this.movingSpeed = movingSpeed;
         this.attackSpeed = attackSpeed;
     }
 
@@ -24,11 +24,11 @@ public class Item {
         this.itemId = itemId;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setHealth(int energy) {
+    public void setEnergy(int energy) {
         this.energy = energy;
     }
 
@@ -40,23 +40,23 @@ public class Item {
         this.defense = defense;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setMovingSpeed(int movingSpeed) {
+        this.movingSpeed = movingSpeed;
     }
 
     public void setAttackSpeed(int attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
-    
+
     public String getItemId() {
         return itemId;
     }
 
-    public String getModel() {
-        return model;
+    public String getName() {
+        return name;
     }
 
-    public int getHealth() {
+    public int getEnergy() {
         return energy;
     }
 
@@ -68,11 +68,17 @@ public class Item {
         return defense;
     }
 
-    public int getSpeed() {
-        return speed;
+    public int getMovingSpeed() {
+        return movingSpeed;
     }
 
     public int getAttackSpeed() {
         return attackSpeed;
+    }
+
+    @Override
+    public String toString() {
+        return getItemId() + "  " + getName() + "    " + getEnergy() + "    " + getPower() + "    " + getDefense() + "    " + getDefense() + "    "
+                + getMovingSpeed() + "    " + getAttackSpeed();
     }
 }
