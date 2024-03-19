@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,15 @@ public class DataBase {
     JSONObject dataBase;
     List<User> users;
     List<Item> items;
+    MatchHistory matchHistory;
+    List<ChangeLog> changeLogList;
 
     public DataBase() {
         dataBase = new JSONObject();
         this.users = new ArrayList<>();
         this.items = new ArrayList<>();
+        this.changeLogList = new ArrayList<>();
+        matchHistory = new MatchHistory();
     }
 
     public void save(String path) {
@@ -29,6 +34,7 @@ public class DataBase {
         try (FileWriter jsonFileWriter = new FileWriter(path)) {
             dataBase.put("users", users);
             dataBase.put("items", items);
+            dataBase.put("log", changeLogList);
             jsonFileWriter.write(dataBase.toString(3));
             jsonFileWriter.flush();
         } catch (Exception e) {
@@ -38,14 +44,17 @@ public class DataBase {
 
     public void addUser(User user) {
         users.add(user);
+        addToChangeLog("user add : " + user.getUserId());
     }
 
     public void deletedUser(User user) {
         users.remove(user);
+        addToChangeLog("user del : " + user.getUserId());
     }
 
     public void addItem(Item item) {
         items.add(item);
+        addToChangeLog("item add : " + item.getItemId());
     }
 
     public void printUsers() {
@@ -63,7 +72,6 @@ public class DataBase {
     }
 
     public void read(String path) {
-        // 파일 읽기
         try (FileReader jsonFileReader = new FileReader(path)) {
             StringBuilder builder = new StringBuilder();
             int ch;
@@ -76,7 +84,6 @@ public class DataBase {
             e.printStackTrace();
         }
 
-        // 객체에 입력
         JSONArray userArray = dataBase.getJSONArray("users");
         for (int i = 0; i < userArray.length(); i++) {
             JSONObject userObject = userArray.getJSONObject(i);
@@ -94,8 +101,37 @@ public class DataBase {
                     itemObject.getInt("power"),
                     itemObject.getInt("defense"),
                     itemObject.getInt("movingSpeed"),
-                    itemObject.getInt("attackSpeed")));
+                    itemObject.getInt("attackSpeed")
+                ));
         }
 
+        JSONArray changeLogArray = dataBase.getJSONArray("log");
+        for(int i = 0; i < changeLogArray.length(); i++) {
+            JSONObject changeLogObject = changeLogArray.getJSONObject(i);
+            changeLogList.add(new ChangeLog(
+                    changeLogObject.getString("log"),
+                    changeLogObject.getString("timeStamp")
+                ));
+        }
+
+    }
+
+    private void addToChangeLog(String log) {
+        changeLogList.add(new ChangeLog(log, LocalDateTime.now().toString()));
+    }
+
+    public void printChangeLog() {
+        System.out.println("변경 이력 : ");
+        for (ChangeLog log : changeLogList) {
+            System.out.println(log);
+        }
+    }
+
+    public void printMatches() {
+        System.out.println(matchHistory.getMatches());
+    }
+
+    public void printWins() {
+        System.out.println(matchHistory.getWins());
     }
 }

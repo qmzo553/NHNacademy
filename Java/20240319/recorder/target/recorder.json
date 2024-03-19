@@ -1,15 +1,16 @@
 {
-    "items": [{
-        "itemId": "123",
-        "defense": 1,
-        "attackSpeed": 1,
-        "name": "tra",
-        "power": 1,
-        "movingSpeed": 1,
-        "energy": 1
-    }],
-    "users": [{
-        "nickName": "xtra",
-        "userId": "424"
-    }]
+   "log": [{
+      "timeStamp": "2024-03-20T00:53:41.451281",
+      "log": "item add : 123"
+   }],
+   "items": [{
+      "itemId": "123",
+      "defense": 1,
+      "attackSpeed": 1,
+      "name": "tra",
+      "power": 1,
+      "movingSpeed": 1,
+      "energy": 1
+   }],
+   "users": []
 }

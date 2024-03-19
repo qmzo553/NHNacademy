@@ -78,7 +78,8 @@ public class Item {
 
     @Override
     public String toString() {
-        return getItemId() + "  " + getName() + "    " + getEnergy() + "    " + getPower() + "    " + getDefense() + "    " + getDefense() + "    "
-                + getMovingSpeed() + "    " + getAttackSpeed();
+        return String.format("%-5s %-7s %-7d %-6d %-8d %-13d %-12d",
+                getItemId(), getName(), getEnergy(), getPower(), getDefense(),
+                getMovingSpeed(), getAttackSpeed());
     }
 }

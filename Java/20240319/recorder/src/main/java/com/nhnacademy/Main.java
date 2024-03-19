@@ -20,10 +20,11 @@ public class Main {
     static int itemMovingSpeed;
     static int itemAttackSpeed;
     static String path;
+    static String type;
 
     public static void main(String[] args) {
         DataBase dataBase = new DataBase();
-        
+
         Options options = new Options();
         Option helpOption = new Option("h", false, "Help");
         options.addOption(helpOption);
@@ -137,22 +138,25 @@ public class Main {
             if (commandLine.hasOption(helpOption.getOpt())) {
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp("recoder", options);
-                System.exit(0);
-            } 
+            }
 
-            if(commandLine.hasOption(addData.getOpt())) {
-                String type = commandLine.getOptionValue(dataType.getOpt());
+            if(commandLine.hasOption(dataType.getOpt())) {
+                type = commandLine.getOptionValue(dataType.getOpt());
+            }
+
+            if(commandLine.hasOption(dbFile.getOpt())) {
                 path = commandLine.getOptionValue(dbFile.getOpt());
+            }
 
-                if(type.equals("user")) {
+            if (commandLine.hasOption(addData.getOpt())) {
+                if (type.equals("user")) {
                     userId = commandLine.getOptionValue(dataId.getOpt());
                     userNickName = commandLine.getOptionValue(dataName.getOpt());
-                    
 
                     User user = new User(userId, userNickName);
                     dataBase.addUser(user);
                     dataBase.save(path);
-                } else if(type.equals("item")) {
+                } else if (type.equals("item")) {
                     itemId = commandLine.getOptionValue(dataId.getOpt());
                     itemName = commandLine.getOptionValue(dataName.getOpt());
                     itemEnergy = Integer.parseInt(commandLine.getOptionValue(dataEnergy.getOpt()));
@@ -161,24 +165,35 @@ public class Main {
                     itemMovingSpeed = Integer.parseInt(commandLine.getOptionValue(dataMovingSpeed.getOpt()));
                     itemAttackSpeed = Integer.parseInt(commandLine.getOptionValue(dataAttackSpeed.getOpt()));
 
-                    Item item = new Item(itemId, itemName, itemEnergy, itemPower, itemDefense, itemMovingSpeed, itemAttackSpeed);
+                    Item item = new Item(itemId, itemName, itemEnergy, itemPower, itemDefense, itemMovingSpeed,
+                            itemAttackSpeed);
                     dataBase.addItem(item);
                     dataBase.save(path);
                 }
             }
 
-            if(commandLine.hasOption(dataList.getOpt())) {
-                String type = commandLine.getOptionValue(dataType.getOpt());
-                path = commandLine.getOptionValue(dbFile.getOpt());
+            if (commandLine.hasOption(dataList.getOpt())) {
                 dataBase.read(path);
-
-                if(type.equals("user")) {
+                if (type.equals("user")) {
                     dataBase.printUsers();
-                } else if(type.equals("item")) {
+                } else if (type.equals("item")) {
                     dataBase.printItems();
                 }
             }
-            
+
+            if(commandLine.hasOption(machesCount.getOpt())) {
+                dataBase.printMatches();
+            }
+
+            if(commandLine.hasOption(winCount.getOpt())) {
+                dataBase.printWins();
+            }
+
+            if(commandLine.hasOption(history.getOpt())) {
+                dataBase.read(path);
+                dataBase.printChangeLog();
+            }
+
         } catch (ParseException e) {
             System.err.println(e.getMessage());
             System.exit(0);
