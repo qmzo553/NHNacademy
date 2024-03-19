@@ -11,7 +11,10 @@ public class Exam01 {
         object2.put("code", 13487);
         object2.put("city", "Seongnam");
         object.put("address", object2);
+        object.put("id", 1111);
         object.put("name", "nhn");
+
+        System.out.println(object.optInt("id", 1234));
 
         System.out.println(object);
     }

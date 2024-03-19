@@ -6,15 +6,21 @@ import org.json.JSONObject;
 public class Exam04 {
     public static void main(String[] args) {
         try {
-            String jsonText = "{\"city\" : \"Seongnam\"}";
-            String jsonText2 = "{\"name\" : \"nhn\"}";
-            JSONObject object = new JSONObject(jsonText2);
-            JSONObject object2 = new JSONObject(jsonText);
+            JSONObject customer = new JSONObject();
+            
+            customer.put("name", "nhn");
+            customer.put("age", 20);
 
-            object2.put("code", 13487);
-            object.put("address", object2);
+            System.out.println(customer);
 
-            System.out.println(object);
+            Object nameObject = customer.get("name");
+            System.out.println("Name type : " + nameObject.getClass().getTypeName());
+            if(nameObject instanceof String) {
+                System.out.println("Name is String");
+            }
+
+            Object ageObject = customer.get("age");
+            System.out.println("Age type : " + ageObject.getClass().getTypeName());
         } catch(JSONException e) {
             System.err.println(e.getMessage());
         }
