@@ -17,11 +17,14 @@
             "mainClass": "com.nhnacademy.Main",
             "projectName": "regexdemo",
             "args": [
-                "2023",
-                "NHN Academy",
-                "BEG"
+                "-classpath",
+                "./src/lib;./src/modules",
+                "-m",
+                "slf4j",
+                "-g",
+                "-h",
+                "./src/main/java/Main.java"
             ]
-            
         }
     ]
 }
