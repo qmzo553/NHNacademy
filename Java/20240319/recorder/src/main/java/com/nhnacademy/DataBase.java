@@ -14,15 +14,15 @@ public class DataBase {
     JSONObject dataBase;
     List<User> users;
     List<Item> items;
-    MatchHistory matchHistory;
     List<ChangeLog> changeLogList;
+    MatchHistory matchHistory;
 
     public DataBase() {
-        dataBase = new JSONObject();
+        this.dataBase = new JSONObject();
         this.users = new ArrayList<>();
         this.items = new ArrayList<>();
         this.changeLogList = new ArrayList<>();
-        matchHistory = new MatchHistory();
+        this.matchHistory = new MatchHistory();
     }
 
     public void save(String path) {
@@ -33,7 +33,7 @@ public class DataBase {
         
         try (FileWriter jsonFileWriter = new FileWriter(path)) {
             dataBase.put("users", users);
-            dataBase.put("items", items);
+            dataBase.put("items", items); 
             dataBase.put("log", changeLogList);
             jsonFileWriter.write(dataBase.toString(3));
             jsonFileWriter.flush();
