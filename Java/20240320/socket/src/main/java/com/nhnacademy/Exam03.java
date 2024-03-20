@@ -9,11 +9,11 @@ public class Exam03 {
 
         try (Socket socket = new Socket("localhost", 12345)) {
             System.out.println("서버에 연결 되었습니다.");
-            System.out.println("Local address : " + socket.getLocalAddress());
+            System.out.println("Local address : " + socket.getLocalAddress().getHostAddress());
             System.out.println("Local port : " + socket.getLocalPort());
-            System.out.println("Remote address : " + socket.getInetAddress());
+            System.out.println("Remote address : " + socket.getInetAddress().getHostAddress());
             System.out.println("Remote port : " + socket.getPort());
-        } catch (Exception e) {
+        } catch (Exception ignore) {
             //
         }
     }

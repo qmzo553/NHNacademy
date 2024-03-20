@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Exam05",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Exam05",
+            "projectName": "socket"
+        },
+        {
+            "type": "java",
+            "name": "Exam04",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.Exam04",
+            "projectName": "socket"
+        },
+        {
+            "type": "java",
             "name": "Exam03",
             "request": "launch",
             "mainClass": "com.nhnacademy.Exam03",
