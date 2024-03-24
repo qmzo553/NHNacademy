@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,77 +13,66 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.Option;
 
 public class SimpleNC {
     public static void main(String[] args) {
         Options options = new Options();
-        Option modeListen = Option.builder("l")
-                .longOpt("listen")
-                .desc("change listen mode")
-                .build();
-        options.addOption(modeListen);
+
+        options.addOption("l", false, "Listen");
 
         CommandLineParser parser = new DefaultParser();
-
         try {
             CommandLine commandLine = parser.parse(options, args);
 
-            // systme에 들어오는 입력들을 netCat리스트에 싹 돌리기 (-> netCatList에서 정확한 포트번호 뽑아서 그놈한테만 돌리는 걸로
-            // 변경)
             if (commandLine.hasOption("l")) {
                 List<Thread> clientHandlerList = new LinkedList<>();
                 List<NetCat> netcatList = new LinkedList<>();
 
                 Thread inputAgent = new Thread(() -> {
                     try {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
                         String line;
-                        while ((line = reader.readLine()) != null) {
+                        while ((line = input.readLine()) != null) {
                             synchronized (netcatList) {
-                                for (NetCat netCat : netcatList) {
-                                    netCat.send(line);
+                                for (NetCat netcat : netcatList) {
+                                    netcat.send(line + "\n");
                                 }
                             }
                         }
-                    } catch (Exception e) {
-                        //
+                    } catch (IOException e) {
                     }
                 });
 
-                // Client : queue에 있는 입력들을 싹 받기 (이건 그대로)
                 Thread outputAgent = new Thread(() -> {
-                    while (!Thread.currentThread().interrupted()) {
+                    while (!Thread.currentThread().isInterrupted()) {
                         synchronized (netcatList) {
-                            for (NetCat netCat : netcatList) {
-                                if (!netCat.isEmptyReceiveQueue()) {
-                                    String line = netCat.receive();
+                            for (NetCat netcat : netcatList) {
+                                if (!netcat.isEmptyReceiveQueue()) {
+                                    String line = netcat.receive();
                                     System.out.println(line);
                                 }
                             }
                         }
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                        //
+
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException ignore) {
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 });
 
                 inputAgent.start();
                 outputAgent.start();
 
-                // Server
                 ServerSocket serverSocket = new ServerSocket(1234);
                 while (!Thread.currentThread().isInterrupted()) {
                     try {
-                        NetCat netCat = new NetCat(serverSocket.accept());
-                        Thread thread = new Thread(netCat);
+                        NetCat netcat = new NetCat(serverSocket.accept());
+                        Thread thread = new Thread(netcat);
                         thread.start();
-                        clientHandlerList.add(thread); // 바꿔줘야함. NetCat을 가지고 있어야함
-                        synchronized (netcatList) {
-                            netcatList.add(netCat); // 주고받는걸 구현해줘야함. 별도로 스레드만들어서 주고받는걸
-                        }
+                        clientHandlerList.add(thread);
+                        netcatList.add(netcat);
                     } catch (Exception e) {
                         System.err.println(e.getMessage());
                     }
@@ -90,18 +80,38 @@ public class SimpleNC {
                 serverSocket.close();
             } else {
                 try (Socket socket = new Socket("localhost", 1234)) {
-                    NetCat netCat = new NetCat(socket);
-                    Thread thread = new Thread(netCat);
+                    NetCat netcat = new NetCat(socket);
+                    Thread thread = new Thread(netcat);
                     thread.start();
+
+                    Thread inputAgent = new Thread(() -> {
+                        try {
+                            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+                            String line;
+                            while ((line = input.readLine()) != null) {
+                                netcat.send(line + "\n");
+                            }
+                        } catch (IOException e) {
+                        }
+                    });
+
+                    Thread outputAgent = new Thread(() -> {
+                        while (!Thread.currentThread().isInterrupted()) {
+                            if (!netcat.isEmptyReceiveQueue()) {
+                                String line = netcat.receive();
+                                System.out.println(line);
+                            }
+                        }
+                    });
+
+                    inputAgent.start();
+                    outputAgent.start();
                     thread.join();
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }
             }
-        } catch (org.apache.commons.cli.ParseException |
-
-                IOException e) {
-            //
+        } catch (org.apache.commons.cli.ParseException | IOException e) {
         }
     }
 }

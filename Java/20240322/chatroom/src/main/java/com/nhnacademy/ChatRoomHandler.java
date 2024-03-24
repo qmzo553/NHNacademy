@@ -9,45 +9,53 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ChatRoomClientHandler implements Runnable{
-    
+public class ChatRoomHandler implements Runnable {
+
+    String clientId;
     Socket socket;
-    Queue<String> receiverQueue = new LinkedList<>();
-    Queue<String> senderQueue = new LinkedList<>();
-    
-    public ChatRoomClientHandler(Socket socket) {
+    Queue<String> receiveQueue = new LinkedList<>();
+    Queue<String> sendQueue = new LinkedList<>();
+
+    public ChatRoomHandler(Socket socket) {
         this.socket = socket;
     }
 
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
     public void send(String message) {
-        synchronized(senderQueue) {
-            senderQueue.add(message);
-        };
+        synchronized (sendQueue) {
+            sendQueue.add(message);
+        }
     }
 
     public boolean isEmptyReceiveQueue() {
-        synchronized(receiverQueue) {
-            return receiverQueue.isEmpty();
+        synchronized (receiveQueue) {
+            return receiveQueue.isEmpty();
         }
     }
 
     public String receive() {
-        synchronized(receiverQueue) {
-            return receiverQueue.poll();
+        synchronized (receiveQueue) {
+            return receiveQueue.poll();
         }
     }
 
     public void run() {
-        try (
-                BufferedReader inputRemote = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        try (BufferedReader inputRemote = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter outputRemote = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
 
             Thread receiver = new Thread(() -> {
                 try {
                     String line;
                     while ((line = inputRemote.readLine()) != null) {
-                        synchronized(receiverQueue) {
-                            receiverQueue.add(line);
+                        synchronized (receiveQueue) {
+                            receiveQueue.add(line);
                         }
                     }
                 } catch (IOException e) {
@@ -58,9 +66,9 @@ public class ChatRoomClientHandler implements Runnable{
             Thread sender = new Thread(() -> {
                 try {
                     while (!Thread.currentThread().isInterrupted()) {
-                        synchronized(senderQueue) {
-                            if (!senderQueue.isEmpty()) {
-                                outputRemote.write(senderQueue.poll());
+                        synchronized (sendQueue) {
+                            if (!sendQueue.isEmpty()) {
+                                outputRemote.write(sendQueue.poll());
                                 outputRemote.flush();
                             }
                         }
@@ -76,8 +84,8 @@ public class ChatRoomClientHandler implements Runnable{
             receiver.join();
             sender.join();
         } catch (Exception e) {
+            Thread.currentThread().interrupt();
             System.err.println(e.getMessage());
-        } finally {
-        }
+        } 
     }
 }

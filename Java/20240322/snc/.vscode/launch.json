@@ -12,13 +12,6 @@
         },
         {
             "type": "java",
-            "name": "SimpleNC",
-            "request": "launch",
-            "mainClass": "com.nhnacademy.SimpleNC",
-            "projectName": "snc"
-        },
-        {
-            "type": "java",
             "name": "server",
             "request": "launch",
             "mainClass": "com.nhnacademy.SimpleNC",
