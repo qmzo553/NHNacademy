@@ -43,7 +43,7 @@ public class ChatRoomServer implements Runnable {
     @Override
     public void run() {
         Thread consoleAgent = new Thread(() -> {
-            while (!Thread.currentThread().interrupted()) {
+            while (!Thread.currentThread().isInterrupted()) {
                 try (BufferedReader consoleInput = new BufferedReader(new InputStreamReader(System.in))) {
                     String line;
                     while ((line = consoleInput.readLine()) != null) {

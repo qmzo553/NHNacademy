@@ -8,3 +8,10 @@
 2024-03-24T19:33:34.576+0900 TRACE JSON message: {"response":"ok","ID":1,"type":"connect","client_id":"0000002"}
 2024-03-24T19:33:42.154+0900 TRACE JSON message: {"target_id":"0000001","ID":2,"type":"message","message":"hello"}
 2024-03-24T19:33:42.156+0900 TRACE JSON message: {"target_id":"0000001","ID":2,"type":"message","message":"hello","client_id":"0000002"}
+2024-03-25T08:31:49.271+0900 TRACE JSON message: {"ID":1,"type":"connect","client_id":"0000001"}
+2024-03-25T08:31:49.273+0900 TRACE JSON message: {"response":"ok","ID":1,"type":"connect","client_id":"0000001"}
+2024-03-25T08:32:01.242+0900 TRACE JSON message: {"ID":1,"type":"connect","client_id":"0000002"}
+2024-03-25T08:32:01.243+0900 TRACE JSON message: {"response":"ok","ID":1,"type":"connect","client_id":"0000002"}
+2024-03-25T08:32:24.635+0900 TRACE JSON message: {"target_id":"0000002","ID":2,"type":"message","message":"hello"}
+2024-03-25T08:32:24.635+0900 TRACE JSON message: {"target_id":"0000002","ID":2,"type":"message","message":"hello","client_id":"0000001"}
+2024-03-25T08:33:06.485+0900 TRACE JSON message: {"ID":3,"type":"client_list"}
