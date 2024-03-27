@@ -12,7 +12,33 @@
         },
         {
             "type": "java",
-            "name": "SimpleCurl",
+            "name": "basic GET",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.SimpleCurl",
+            "projectName": "scurl",
+            "args": [
+                "java",
+                "scurl",
+                "50.16.63.240/get"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "add Header",
+            "request": "launch",
+            "mainClass": "com.nhnacademy.SimpleCurl",
+            "projectName": "scurl",
+            "args": [
+                "java",
+                "scurl",
+                "-H",
+                "X-Custom-Header: NA",
+                "50.16.63.240/get"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "POST",
             "request": "launch",
             "mainClass": "com.nhnacademy.SimpleCurl",
             "projectName": "scurl",
@@ -21,7 +47,11 @@
                 "scurl",
                 "-X",
                 "POST",
-                "50.16.63.240"
+                "-d",
+                "{\"hello\": \"world\"}",
+                "-H",
+                "Content-Type: application/json",
+                "50.16.63.240/post"
             ]
         }
     ]

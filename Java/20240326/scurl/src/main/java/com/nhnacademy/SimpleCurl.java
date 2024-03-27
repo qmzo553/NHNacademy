@@ -12,6 +12,7 @@ public class SimpleCurl {
     public static void main(String[] args) {
         String header;
         String method;
+        String data;
         boolean verbose;
         String url = args[args.length - 1];
 
@@ -88,7 +89,14 @@ public class SimpleCurl {
             if (commandLine.hasOption(methodOpt.getOpt())) {
                 method = commandLine.getOptionValue(methodOpt.getOpt());
                 simpleCurlClient.setMethod(method);
+
+                if(commandLine.hasOption(dataOpt.getOpt())) {
+                    data = commandLine.getOptionValue(dataOpt.getOpt());
+                    simpleCurlClient.setData(data);
+                }
             } 
+
+            simpleCurlClient.connect();
 
         } catch (org.apache.commons.cli.ParseException ignore) {
             //
