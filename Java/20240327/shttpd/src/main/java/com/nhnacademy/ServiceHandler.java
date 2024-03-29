@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class ServiceHandler implements Runnable {
     static final String DOCUMENT_ROOT = "/www";
-    static final String UPLOAD_DIR = "/";
+    static final String UPLOAD_DIR = "/upload";
     static final String CRLF = "\r\n";
     Socket socket;
     Logger log;
