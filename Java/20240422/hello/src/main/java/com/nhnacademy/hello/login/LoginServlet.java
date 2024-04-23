@@ -3,6 +3,7 @@ package com.nhnacademy.hello.login;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,7 +61,10 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect("/login");
         } else {
             log.error("아이디/패스워드가 일치하지 않습니다.");
-            resp.sendRedirect("/login.html");
+            // resp.sendRedirect("/login.html");
+            RequestDispatcher rd = req.getRequestDispatcher("/login.html");
+            rd.forward(req, resp);
+            log.error("id: {}", id);
         }
     }
 }
