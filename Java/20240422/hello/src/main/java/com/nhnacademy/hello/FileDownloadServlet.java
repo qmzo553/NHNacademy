@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
+@WebServlet(name = "fileDownloadServlet", urlPatterns = "/file/fileDownload")
 @Slf4j
 public class FileDownloadServlet extends HttpServlet {
     private static final String UPLOAD_DIR = "/Users/parkheejun/NHNacademy/Java/20240422/hello/src/main/java/com/nhnacademy/hello/upload";

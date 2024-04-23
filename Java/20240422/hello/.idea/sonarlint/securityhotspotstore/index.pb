@@ -251,3 +251,5 @@ w
 G.idea/sonarlint/issuestore/1/0/10f2119b18de4c2d93011c2acd27301df22c2983,4/6/46b1e47422dc9bb27d66232520441f7cb61c8c1d
 w
 G.idea/sonarlint/issuestore/1/0/1071321abe75a0c352611dce86872ce129a45f4c,3/9/391b78e3c17724ff9d42cbfa7892204e91e4c9e1
+i
+9src/main/java/com/nhnacademy/hello/WebAppInitializer.java,7/5/75f007de684bcd2d5d5ba8ac1f0ee0c3355d8d7b

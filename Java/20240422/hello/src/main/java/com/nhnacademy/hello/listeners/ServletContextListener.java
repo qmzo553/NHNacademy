@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.annotation.WebListener;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+@WebListener
 @Slf4j
 public class ServletContextListener implements javax.servlet.ServletContextListener {
 

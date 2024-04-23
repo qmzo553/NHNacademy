@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,16 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+@WebFilter(
+        filterName = "loginFilter",
+        urlPatterns = "/*",
+        initParams = {
+                @WebInitParam(name = "exclude-urls", value = "/login\n" +
+                        "                /logout\n" +
+                        "                /login.html")
+        }
+)
 public class LoginCheckFilter implements Filter {
 
     private static Logger log = LoggerFactory.getLogger(LoginCheckFilter.class.getName());

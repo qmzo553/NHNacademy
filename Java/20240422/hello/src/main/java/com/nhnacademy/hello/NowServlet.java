@@ -1,11 +1,13 @@
 package com.nhnacademy.hello;
 
 import com.nhnacademy.hello.utils.CounterUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +16,9 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@WebServlet(name = "nowServlet", urlPatterns = "/now")
+@Slf4j
 public class NowServlet extends HttpServlet {
-    private static Logger log = LoggerFactory.getLogger(NowServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

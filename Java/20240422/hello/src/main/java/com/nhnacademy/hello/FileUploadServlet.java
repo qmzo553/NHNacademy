@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import java.io.IOException;
         location = "/Users/parkheejun/NHNacademy/Java/20240422/hello/src/main/java/com/nhnacademy/hello/upload"
 )
 
+@WebServlet(name = "fileUploadServlet", urlPatterns = "/file/fileUpload")
 @Slf4j
 public class FileUploadServlet extends HttpServlet {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";

@@ -1,10 +1,13 @@
 package com.nhnacademy.hello;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +15,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
+@WebServlet(name = "counterServlet", urlPatterns = "/counter", initParams = {@WebInitParam(name="counter",value="100")})
+@Slf4j
 public class CounterServlet extends HttpServlet {
-    private static Logger log = LoggerFactory.getLogger(CounterServlet.class.getName());
-
     private long counter;
 
     @Override
