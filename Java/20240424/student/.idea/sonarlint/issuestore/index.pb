@@ -1,8 +1,6 @@
 
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
-I
-src/main/webapp/index.jsp,8/e/8e6d3b70c9f5b02570779b0441540d45eceb0ded
 `
 0src/main/java/com/nhnacademy/student/Gender.java,d/4/d4fd5529100f491f8381eaa93a09a76368e30667
 a
@@ -39,8 +37,6 @@ O
 src/main/webapp/WEB-INF/web.xml,2/e/2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 Q
 !src/main/webapp/student/error.jsp,0/0/00c65cf7a96b7f1f47c2f462e623a20054704b53
-`
-0src/main/webapp/WEB-INF/tld/customTagLibrary.tld,c/8/c8280f7bd6369f02a8519c2ab9138048ac034a87
 f
 6src/main/java/com/nhnacademy/student/FrontServlet.java,8/7/87cc9bf9e55061adfc9b5a18f8616d7aa4e5252a
 w
@@ -53,3 +49,23 @@ S
 Q.idea/sonarlint/securityhotspotstore/8/e/8e6d3b70c9f5b02570779b0441540d45eceb0ded,b/a/ba553ac59b6707e71c75d153a30b48955826938d
 Å
 Q.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec,2/c/2cabb939da04d3de3a200bf2b575690e1a16316d
+q
+Asrc/main/java/com/nhnacademy/student/StudentDeleteController.java,c/c/cc484c718a93a6a4cd9f21b1c8b51ed534886f78
+a
+1src/main/java/com/nhnacademy/student/Command.java,b/8/b8c05938999c7b982c9257103fc085f17a9469e6
+o
+?src/main/java/com/nhnacademy/student/StudentListController.java,1/8/18870b1bbd24a91209fc4f0682fba67381afef05
+o
+?src/main/java/com/nhnacademy/student/StudentViewController.java,e/0/e02c23e01ab53799c21dfe0652bd1492966dae47
+u
+Esrc/main/java/com/nhnacademy/student/StudentUpdateFormController.java,8/c/8c58a8d85ef1df5a42b749d0db14ba47ee222b12
+q
+Asrc/main/java/com/nhnacademy/student/StudentUpdateController.java,3/2/32ec35ed3c0aa20c3bec48b25cbce92f13a1c0ae
+s
+Csrc/main/java/com/nhnacademy/student/StudentRegisterController.java,9/0/909f337b83f34b09cc7d4b3bbc57b28a91164d4a
+i
+9src/main/java/com/nhnacademy/student/ErrorController.java,3/e/3e688f37d1af9a21aae4fdfe422a918c8e6ca61e
+w
+Gsrc/main/java/com/nhnacademy/student/StudentRegisterFormController.java,8/e/8ee115d272154b1177d906a713dcd0c270349bdf
+o
+?src/main/java/com/nhnacademy/student/JsonStudentRepository.java,7/d/7d18a1b2db5cc35b432115506ffca67a1fb8b333
