@@ -7,24 +7,33 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JsonStudentRepository implements StudentRepository {
 
     private final ObjectMapper objectMapper;
     //json file 저장 경로
-    private static final String JSON_FILE_PATH="/Users/nhn/IdeaProjects/servlet:jsp/student/src/main/json/student.json";
+    private static final String JSON_FILE_PATH="/Users/parkheejun/NHNacademy/Java/20240424/student/src/main/json/student.json";
 
     public JsonStudentRepository(){
         objectMapper = new ObjectMapper();
         //LocalDatetime json 직열화/역직렬화 가능하도록 설정
         objectMapper.registerModule(new JavaTimeModule());
-        //todo JSON_FILE_PATH 경로에 json 파일이 존재하면 삭제 합니다.
 
+        File file = new File(JSON_FILE_PATH);
+        if(file.exists()){
+            file.delete();
+        }
     }
 
     private synchronized List<Student> readJsonFile(){
-        //todo json 파일이 존재하지 않다면 비어있는 List<Student> 리턴
+        List<Student> students = new ArrayList<>();
+
+        File file = new File(JSON_FILE_PATH);
+        if(!file.exists()){
+            return students;
+        }
 
         //json read & 역직렬화 ( json string -> Object )
         try(FileInputStream fileInputStream = new FileInputStream(file);
@@ -64,30 +73,49 @@ public class JsonStudentRepository implements StudentRepository {
         //List<Student>객체를 -> json String 형태로 저장(직렬화)
         writeJsonFile(students);
     }
-    //todo 나머지 method는 직접 구현하기
 
     @Override
     public void update(Student student) {
-
+        save(student);
     }
 
     @Override
     public void deleteById(String id) {
+        List<Student> students = readJsonFile();
 
+        students.removeIf(student -> student.getId().equals(id));
+
+        writeJsonFile(students);
     }
 
     @Override
     public Student getStudentById(String id) {
+        List<Student> students = readJsonFile();
+
+        for(Student student : students){
+            if(student.getId().equals(id)){
+                return student;
+            }
+        }
+
         return null;
     }
 
     @Override
     public List<Student> getStudents() {
-        return List.of();
+        return readJsonFile();
     }
 
     @Override
     public boolean existsById(String id) {
+        List<Student> students = readJsonFile();
+
+        for(Student student : students){
+            if(student.getId().equals(id)){
+                return true;
+            }
+        }
+
         return false;
     }
 }
