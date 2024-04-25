@@ -1,8 +1,8 @@
 package com.nhnacademy.student.Controller;
 
+import com.nhnacademy.student.Repository.StudentRepository;
 import com.nhnacademy.student.RequestMapping;
 import com.nhnacademy.student.Student;
-import com.nhnacademy.student.Repository.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.annotation.WebServlet;

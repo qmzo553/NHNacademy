@@ -25,15 +25,17 @@ public class FrontServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html");
         ControllerFactory controllerFactory = (ControllerFactory) req.getServletContext().getAttribute("controllerFactory");
+        log.info("controllerFactory: {}", controllerFactory);
 
         try {
             String servletPath = req.getServletPath();
             String method = req.getMethod();
-            log.info("servletPath: {}, method: {}", servletPath, method);
+            log.info("Front Servlet : servletPath: {}, method: {}", servletPath, method);
 
             Command cmd = (Command) controllerFactory.getBean(req.getMethod(), req.getServletPath());
-            String view = cmd.execute(req, resp);
+            log.info("cmd: {}", cmd);
 
+            String view = cmd.execute(req, resp);
             if (view.startsWith(REDIRECT_PREFIX)) {
                 log.error("redirect-url : {}", view.substring(REDIRECT_PREFIX.length() + 1));
 

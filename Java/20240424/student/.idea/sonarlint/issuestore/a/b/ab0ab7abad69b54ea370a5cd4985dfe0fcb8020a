@@ -1,0 +1,12 @@
+
+†	java:S112/"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚ÒιόÿÿÿÿJ$cd27d1f3-37e0-4913-8fe3-a32271389f54
+†	java:S1121"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚ÒιόÿÿÿÿJ$515b0cdc-4d2f-49df-bd0e-e8a5407d245c
+†	java:S112@"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚ÒιόÿÿÿÿJ$aec436be-4097-430c-a356-bc38d86bb1bf
+	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(δ…»‰8α†Όρ1J$e446468e-bd11-4f41-9054-f64a757f03e9
+‚
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(Υ¤“ψÿÿÿÿJ$19e1ad18-6223-4ec1-bf33-b94cd0cbc816
+{	java:S899";Do something with the "boolean" value returned by "delete".(²­ϋÿÿÿÿJ$11772a94-85e9-4da7-b264-9f950dffbc40
+
+java:S4042"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(²­ϋÿÿÿÿJ$ec88428f-b6b8-47e5-84ee-6ca65325a623
+€
+java:S21470"DCombine this catch with the one at line 46, which has the same body.(ο­£ΔJ$909e2d36-45da-43ce-8df9-5b0d5e9ae2c4
