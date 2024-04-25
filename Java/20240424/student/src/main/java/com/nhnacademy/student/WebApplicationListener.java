@@ -1,5 +1,8 @@
 package com.nhnacademy.student;
 
+import com.nhnacademy.student.Repository.JsonStudentRepository;
+import com.nhnacademy.student.Repository.StudentRepository;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

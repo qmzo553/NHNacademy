@@ -1,5 +1,6 @@
 package com.nhnacademy.student;
 
+import com.nhnacademy.student.Controller.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.RequestDispatcher;
@@ -23,13 +24,14 @@ public class FrontServlet extends HttpServlet {
         // 공통 처리 - 응답 content-type, character encoding 지정.
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html");
+        ControllerFactory controllerFactory = (ControllerFactory) req.getServletContext().getAttribute("controllerFactory");
 
         try {
             String servletPath = req.getServletPath();
             String method = req.getMethod();
             log.info("servletPath: {}, method: {}", servletPath, method);
 
-            Command cmd = resolveCommand(servletPath, method);
+            Command cmd = (Command) controllerFactory.getBean(req.getMethod(), req.getServletPath());
             String view = cmd.execute(req, resp);
 
             if (view.startsWith(REDIRECT_PREFIX)) {
@@ -54,28 +56,28 @@ public class FrontServlet extends HttpServlet {
 
     }
 
-    private Command resolveCommand(String servletPath, String method){
-        Command command = null;
-
-        if("/student/list.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
-            command = new StudentListController();
-        }else if("/student/view.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
-            command = new StudentViewController();
-        }else if("/student/delete.do".equals(servletPath) && "POST".equalsIgnoreCase(method) ){
-            command = new StudentDeleteController();
-        }else if("/student/update.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
-            command = new StudentUpdateFormController();
-        }else if("/student/update.do".equals(servletPath) && "POST".equalsIgnoreCase(method) ){
-            command = new StudentUpdateController();
-        }else if("/student/register.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
-            command = new StudentRegisterFormController();
-        }else if("/student/register.do".equals(servletPath) && "POST".equalsIgnoreCase(method) ){
-            command = new StudentRegisterController();
-        }else if("/error.do".equals(servletPath)){
-            command = new ErrorController();
-        }
-
-        return command;
-    }
+//    private Command resolveCommand(String servletPath, String method){
+//        Command command = null;
+//
+//        if("/student/list.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
+//            command = new StudentListController();
+//        }else if("/student/view.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
+//            command = new StudentViewController();
+//        }else if("/student/delete.do".equals(servletPath) && "POST".equalsIgnoreCase(method) ){
+//            command = new StudentDeleteController();
+//        }else if("/student/update.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
+//            command = new StudentUpdateFormController();
+//        }else if("/student/update.do".equals(servletPath) && "POST".equalsIgnoreCase(method) ){
+//            command = new StudentUpdateController();
+//        }else if("/student/register.do".equals(servletPath) && "GET".equalsIgnoreCase(method) ){
+//            command = new StudentRegisterFormController();
+//        }else if("/student/register.do".equals(servletPath) && "POST".equalsIgnoreCase(method) ){
+//            command = new StudentRegisterController();
+//        }else if("/error.do".equals(servletPath)){
+//            command = new ErrorController();
+//        }
+//
+//        return command;
+//    }
 
 }
