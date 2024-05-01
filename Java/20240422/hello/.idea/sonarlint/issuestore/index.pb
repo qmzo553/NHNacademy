@@ -122,15 +122,11 @@ G.idea/sonarlint/issuestore/9/0/909762385fc6eb20f922a91c6865741308b57f2c,c/e/ce
 w
 G.idea/sonarlint/issuestore/9/5/951606f9113e745295f6b653db7bd58693a5ce02,7/5/758511a813fc5f6ab320235b5fdc8edac59c5553
 w
-G.idea/sonarlint/issuestore/9/c/9c32dbd48ed675998c4591a60ed52c8c8ad959af,6/c/6c412bb95a76ca7b262bdfcbce981c20f8d561c0
-w
 G.idea/sonarlint/issuestore/9/0/90af46c2c96b3b2e059df18ac32dcbcc35221f18,1/1/110b3f353747b26de3fad82c1c2efbe29721b54b
 Å
 Q.idea/sonarlint/securityhotspotstore/a/e/ae9ddf453f55affea2d6b9e3973cac1eb2efb4e1,e/3/e36d3b35b0aa033dfcf067b2cd16117a306b1e80
 Å
 Q.idea/sonarlint/securityhotspotstore/a/0/a01ec24c271959018dafdb32eec4fc45faa8b3f4,0/5/0519f01bfbc6bc3149f2ae6d6f9545204af03465
-Å
-Q.idea/sonarlint/securityhotspotstore/2/c/2c9e2cf95c615ba66b754342768d3588787929d9,6/d/6d7ad21dd786b5fde2a318a010f97dbdd484b700
 w
 G.idea/sonarlint/issuestore/8/6/86d7f9e11539c94e7297883b57657a36861eb449,e/c/ec56df153509ce95b16d85a00d8c3e778a8b684b
 Å
@@ -153,8 +149,6 @@ w
 G.idea/sonarlint/issuestore/e/e/eee9dc682b782a77cd3e89251c60de8415ac3440,f/2/f2949eb7f55010a63beded6b2ef853fcdd9ccd28
 Å
 Q.idea/sonarlint/securityhotspotstore/9/5/951606f9113e745295f6b653db7bd58693a5ce02,d/2/d2ef65f2ba1db4bbb53ddf7cfc0f8e0c3015899f
-Å
-Q.idea/sonarlint/securityhotspotstore/9/c/9c32dbd48ed675998c4591a60ed52c8c8ad959af,a/a/aa22e8010620ccfb2356dc793157290b6199e00f
 Å
 Q.idea/sonarlint/securityhotspotstore/5/4/5451160b6273aa0ce17b787e5715366a70a65189,9/5/950a4abaf45133df68c941cb95c9a707160484a7
 w
@@ -203,8 +197,6 @@ w
 G.idea/sonarlint/issuestore/b/b/bbf202272a96de5cd6b6828ffdc55fb3ce45289c,8/4/84e95bd0ea795e5307464eb72e7bd95d9f673c00
 Å
 Q.idea/sonarlint/securityhotspotstore/1/0/1071321abe75a0c352611dce86872ce129a45f4c,5/e/5ed3ff326d927852c97bfffea0d34c9f799aa8bc
-w
-G.idea/sonarlint/issuestore/2/c/2c9e2cf95c615ba66b754342768d3588787929d9,3/0/30ad20a359c68e29c7174a899c9a811c0dde3243
 Å
 Q.idea/sonarlint/securityhotspotstore/1/8/188792529ee886cbdc6616248007f7a96c73e03d,2/f/2f46da370e70a7845ee0efd64270ccf14d2cb931
 Å
