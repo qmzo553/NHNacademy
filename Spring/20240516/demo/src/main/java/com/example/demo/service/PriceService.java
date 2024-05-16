@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -25,17 +25,18 @@ public class PriceService {
         priceList = dataParser.readPrice(fileProperties.getPriceFilePath());
     }
 
-    public String billTotalOutput(String city, String sector, int useAmount) {
-        priceList.stream()
-                .filter(price -> price.getCity().equals(city) && price.getSector().equals(sector))
-                .collect(Collectors.toList());
-
-        return outputFormatter.format(null);
+    public String billTotalOutput(String city, String sector, int usage) {
+        return outputFormatter.format(getPriceByCityAndSectorAndUsage(city, sector, usage), usage);
     }
 
-    private Price getPriceByCityAndSector(String city, String sector) {
-
-        return null;
+    private Price getPriceByCityAndSectorAndUsage(String city, String sector, int usage) {
+//        Optional<Price> result = priceList.stream()
+//                .filter(price -> price.getCity().equals(city) && price.getSector().equals(sector))
+//                .filter(price -> price.getStartSection() <= usage && price.getEndSection() >= usage)
+//                .findFirst();
+//
+//        return result.orElse(null);
+        return new Price(1, "동두천시", "가정용", 1, 1, 20, 690, "");
     }
 
 }

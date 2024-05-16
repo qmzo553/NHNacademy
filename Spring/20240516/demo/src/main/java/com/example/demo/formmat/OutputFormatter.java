@@ -1,6 +1,8 @@
 package com.example.demo.formmat;
 
+import com.example.demo.domain.Price;
+
 public interface OutputFormatter {
 
-    String format(Object object);
+    String format(Price price, int usage);
 }

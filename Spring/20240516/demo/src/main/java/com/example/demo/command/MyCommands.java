@@ -29,8 +29,6 @@ public class MyCommands {
 
     @ShellMethod
     public String currentUser() {
-        List<Account> accounts = authenticationService.getAccounts("account");
-        List<Price> prices = priceService.getPrice("Tariff");
 
         return "hi";
     }
@@ -51,8 +49,8 @@ public class MyCommands {
     }
 
     @ShellMethod
-    public String billTotal(String city, String sector, int useAmount) {
-        return null;
+    public String billTotal(String city, String sector, int usage) {
+        return priceService.billTotalOutput(city, sector, usage);
     }
 
 }

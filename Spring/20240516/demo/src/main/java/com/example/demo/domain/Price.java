@@ -38,8 +38,8 @@ public class Price {
 
     public Price() {}
 
-    public long getBillTotal(int userAmount) {
-        return (long) userAmount * unitPrice;
+    public long getBillTotal(int usage) {
+        return (long) usage * unitPrice;
     }
 
     @Override
