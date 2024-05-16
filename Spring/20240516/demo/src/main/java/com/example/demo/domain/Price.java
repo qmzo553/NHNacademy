@@ -31,12 +31,16 @@ public class Price {
     private int endSection;
 
     @JsonProperty("구간금액(원)")
-    private int sectionPrice;
+    private int unitPrice;
 
     @JsonProperty("단계별 기본요금(원)")
     private String basePrice;
 
     public Price() {}
+
+    public long getBillTotal(int userAmount) {
+        return (long) userAmount * unitPrice;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -49,15 +53,15 @@ public class Price {
                 && stage == price.stage
                 && startSection == price.startSection
                 && endSection == price.endSection
-                && sectionPrice == price.sectionPrice
+                && unitPrice == price.unitPrice
                 && basePrice.equals(price.basePrice);
     }
 
     @Override
-    public int hashCode() { return Objects.hash(id, city, sector, stage, startSection, endSection, sectionPrice); }
+    public int hashCode() { return Objects.hash(id, city, sector, stage, startSection, endSection, unitPrice); }
 
     @Override
     public String toString() {
-        return "Price(id=" + id + ", city=" + city + ", sector=" + sector + ", unitPrice=" + (endSection - startSection) * sectionPrice + ")";
+        return "Price(id=" + id + ", city=" + city + ", sector=" + sector + ")";
     }
 }

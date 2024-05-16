@@ -2,19 +2,20 @@ package com.example.demo.command;
 
 import com.example.demo.domain.Account;
 import com.example.demo.domain.Price;
-import com.example.demo.file.CsvDataParser;
-import com.example.demo.file.DataParser;
-import com.example.demo.file.JsonDataParser;
+import com.example.demo.service.AuthenticationService;
+import com.example.demo.service.PriceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @ShellComponent
 public class MyCommands {
 
-    DataParser dataParser = new JsonDataParser();
-    DataParser dataParser2 = new CsvDataParser();
+    private final AuthenticationService authenticationService;
+    private final PriceService priceService;
 
     @ShellMethod
     public String login(String name, String password) {
@@ -28,10 +29,8 @@ public class MyCommands {
 
     @ShellMethod
     public String currentUser() {
-        List<Account> accounts = dataParser.readAccount("src/main/resources/file/account.json");
-        List<Price> prices = dataParser.readPrice("src/main/resources/file/Tariff.json");
-        List<Account> accounts2 = dataParser2.readAccount("src/main/resources/file/account.csv");
-        List<Price> prices2 = dataParser2.readPrice("src/main/resources/file/Tariff.csv");
+        List<Account> accounts = authenticationService.getAccounts("account");
+        List<Price> prices = priceService.getPrice("Tariff");
 
         return "hi";
     }
@@ -52,7 +51,7 @@ public class MyCommands {
     }
 
     @ShellMethod
-    public String billTotal(String city, String sector, String price) {
+    public String billTotal(String city, String sector, int useAmount) {
         return null;
     }
 

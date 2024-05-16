@@ -5,6 +5,7 @@ import com.example.demo.domain.Price;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class JsonDataParser implements DataParser {
         try {
             return objectMapper.readValue(new File(filePath), typeReference);
         } catch (IOException e) {
-            log.error("Failed to read JSON file: {}", filePath, e);
+            log.error(e.getMessage());
             return null;
         }
     }
