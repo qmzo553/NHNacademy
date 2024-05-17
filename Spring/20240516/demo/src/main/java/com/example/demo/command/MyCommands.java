@@ -1,14 +1,10 @@
 package com.example.demo.command;
 
-import com.example.demo.domain.Account;
-import com.example.demo.domain.Price;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.PriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @ShellComponent
@@ -18,8 +14,9 @@ public class MyCommands {
     private final PriceService priceService;
 
     @ShellMethod
-    public String login(String name, String password) {
-        return null;
+    public String login(String id, String password) {
+
+        return authenticationService.login(id, password).toString();
     }
 
     @ShellMethod

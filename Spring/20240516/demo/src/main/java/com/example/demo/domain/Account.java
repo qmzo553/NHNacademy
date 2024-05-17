@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,16 @@ public class Account {
     private String name;
 
     public Account() {}
+
+    @JsonSetter("비밀번호")
+    public void setPassword(String password) {
+        this.password = password != null ? password.trim() : null;
+    }
+
+    @JsonSetter("이름")
+    public void setName(String name) {
+        this.name = name != null ? name.trim() : null;
+    }
 
     @Override
     public boolean equals(Object o) {

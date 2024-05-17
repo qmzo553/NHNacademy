@@ -38,7 +38,7 @@ public class CsvDataParser implements DataParser {
             MappingIterator<T> it = csvMapper.readerFor(clazz).with(schema).readValues(csvFile);
             return it.readAll();
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
             return null;
         }
     }
