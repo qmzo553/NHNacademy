@@ -8,8 +8,11 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -27,6 +30,24 @@ public class PriceService {
 
     public String billTotalOutput(String city, String sector, int usage) {
         return outputFormatter.format(getPriceByCityAndSectorAndUsage(city, sector, usage), usage);
+    }
+
+    public String getCities() {
+        if(priceList.isEmpty()) {
+            return "";
+        }
+
+        Set<String> Cities = priceList.stream()
+                .map(Price::getCity)
+                .collect(Collectors.toCollection(HashSet::new));
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        String joinedCities = String.join(", ", Cities);
+        builder.append(joinedCities);
+        builder.append("]");
+
+        return builder.toString();
     }
 
     private Price getPriceByCityAndSectorAndUsage(String city, String sector, int usage) {

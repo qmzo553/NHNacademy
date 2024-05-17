@@ -31,7 +31,7 @@ public class MyCommands {
 
     @ShellMethod
     public String city() {
-        return null;
+        return priceService.getCities();
     }
 
     @ShellMethod
