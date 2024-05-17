@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Account {
 
     @JsonProperty("아이디")
@@ -23,7 +25,6 @@ public class Account {
     @JsonProperty("이름")
     private String name;
 
-    public Account() {}
 
     @JsonSetter("비밀번호")
     public void setPassword(String password) {
@@ -50,6 +51,9 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account(id=" + id + ", password=" + password + ", name=" + name + ")";
+        return "Account(id=" + id +
+                ", password=" + password +
+                ", name=" + name +
+                ")";
     }
 }

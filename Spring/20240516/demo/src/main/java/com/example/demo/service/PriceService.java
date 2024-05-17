@@ -28,12 +28,8 @@ public class PriceService {
         priceList = dataParser.readPrice(fileProperties.getPriceFilePath());
     }
 
-    public String billTotalOutput(String city, String sector, int usage) {
-        return outputFormatter.format(getPriceByCityAndSectorAndUsage(city, sector, usage), usage);
-    }
-
     public String getCities() {
-        if(priceList.isEmpty()) {
+        if(priceList == null || priceList.isEmpty()) {
             return "";
         }
 
@@ -51,7 +47,7 @@ public class PriceService {
     }
 
     public String getSectors(String city) {
-        if(priceList.isEmpty()) {
+        if(priceList == null || priceList.isEmpty()) {
             return "";
         }
 
@@ -76,7 +72,17 @@ public class PriceService {
             throw new IllegalArgumentException("일치하는 도시가 없습니다.");
         }
 
-        return String.format("Price(id=%d, city=%s, sector=%s, unitPrice=%d", price.getId(), price.getCity(), price.getSector(), price.getUnitPrice());
+        return String.format("Price(id=%d, city=%s, sector=%s, unitPrice=%d)", price.getId(), price.getCity(), price.getSector(), price.getUnitPrice());
+    }
+
+    public String billTotalOutput(String city, String sector, int usage) {
+        Price price = getPriceByCityAndSectorAndUsage(city, sector, usage);
+
+        if(price == null) {
+            throw new IllegalArgumentException("일치하는 도시가 없습니다.");
+        }
+
+        return outputFormatter.format(price, usage);
     }
 
     private Price getPriceByCityAndSector(String city, String sector) {

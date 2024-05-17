@@ -21,7 +21,7 @@ public class MyCommands {
 
     @ShellMethod
     public String logout() {
-        return "good bye";
+        return authenticationService.logout();
     }
 
     @ShellMethod

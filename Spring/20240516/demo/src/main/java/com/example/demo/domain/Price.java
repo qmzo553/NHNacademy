@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Price {
 
     @JsonProperty("순번")
@@ -36,8 +38,6 @@ public class Price {
 
     @JsonProperty("단계별 기본요금(원)")
     private String basePrice;
-
-    public Price() {}
 
     @JsonSetter("지자체명")
     public void setCity(String city) {
@@ -73,6 +73,14 @@ public class Price {
 
     @Override
     public String toString() {
-        return "Price(id=" + id + ", city=" + city + ", sector=" + sector + ")";
+        return "Price(id=" + id +
+                ", city=" + city +
+                ", sector=" + sector +
+                ", stage=" + stage +
+                ", startSection=" + startSection +
+                ", endSection=" + endSection +
+                ", unitPrice=" + unitPrice +
+                ", basePrice=" + basePrice +
+                ")";
     }
 }
