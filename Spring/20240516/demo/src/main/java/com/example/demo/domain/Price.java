@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,16 @@ public class Price {
     private String basePrice;
 
     public Price() {}
+
+    @JsonSetter("지자체명")
+    public void setCity(String city) {
+        this.city = city != null ? city.trim() : null;
+    }
+
+    @JsonSetter("업종")
+    public void setSector(String sector) {
+        this.sector = sector != null ? sector.trim() : null;
+    }
 
     public long getBillTotal(int usage) {
         return (long) usage * unitPrice;

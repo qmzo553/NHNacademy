@@ -30,13 +30,12 @@ public class PriceService {
     }
 
     private Price getPriceByCityAndSectorAndUsage(String city, String sector, int usage) {
-//        Optional<Price> result = priceList.stream()
-//                .filter(price -> price.getCity().equals(city) && price.getSector().equals(sector))
-//                .filter(price -> price.getStartSection() <= usage && price.getEndSection() >= usage)
-//                .findFirst();
-//
-//        return result.orElse(null);
-        return new Price(1, "동두천시", "가정용", 1, 1, 20, 690, "");
+        Optional<Price> result = priceList.stream()
+                .filter(price -> price.getCity().equals(city) && price.getSector().equals(sector))
+                .filter(price -> price.getStartSection() <= usage && price.getEndSection() >= usage)
+                .findFirst();
+
+        return result.orElse(null);
     }
 
 }
