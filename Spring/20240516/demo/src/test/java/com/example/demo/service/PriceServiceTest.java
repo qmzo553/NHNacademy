@@ -5,6 +5,7 @@ import com.example.demo.file.DataParser;
 import com.example.demo.formmat.OutputFormatter;
 import com.example.demo.properties.FileProperties;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -42,6 +43,7 @@ class PriceServiceTest {
     }
 
     @Test
+    @DisplayName("get cities")
     void testGetCities() {
         String cities = priceService.getCities();
         assertNotNull(cities);
@@ -49,6 +51,7 @@ class PriceServiceTest {
     }
 
     @Test
+    @DisplayName("get sectors")
     void testGetSectors() {
         String sectors = priceService.getSectors("서울");
         assertNotNull(sectors);
@@ -56,6 +59,7 @@ class PriceServiceTest {
     }
 
     @Test
+    @DisplayName("get unitPrice by city, sector")
     void testGetUnitPriceByCityAndSector() {
         String unitPrice = priceService.getUnitPriceByCityAndSector("서울", "가정용");
         assertNotNull(unitPrice);
@@ -63,6 +67,7 @@ class PriceServiceTest {
     }
 
     @Test
+    @DisplayName("get bill total")
     void testBillTotalOutput() {
         Price mockPrice = new Price(1, "서울", "가정용", 1, 1, 20, 690, "");
         when(outputFormatter.format(mockPrice, 10)).thenReturn("Formatted output");
@@ -73,6 +78,7 @@ class PriceServiceTest {
     }
 
     @Test
+    @DisplayName("exception")
     void testGetUnitPriceByCityAndSector_NotFound() {
         assertThrows(IllegalArgumentException.class, () -> {
             priceService.getUnitPriceByCityAndSector("인천", "가정용");
@@ -80,6 +86,7 @@ class PriceServiceTest {
     }
 
     @Test
+    @DisplayName("exception")
     void testBillTotalOutput_NotFound() {
         assertThrows(IllegalArgumentException.class, () -> {
             priceService.billTotalOutput("인천", "가정용", 10);

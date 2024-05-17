@@ -4,6 +4,7 @@ import com.example.demo.domain.Account;
 import com.example.demo.file.DataParser;
 import com.example.demo.properties.FileProperties;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,11 +40,13 @@ class AuthenticationServiceTest {
     }
 
     @Test
+    @DisplayName("empty current login list")
     void testGetCurrentLoginList_Empty() {
         assertEquals("", authenticationService.getCurrentLoginList());
     }
 
     @Test
+    @DisplayName("success login")
     void testLogin_Success() {
         Account account = authenticationService.login("1", "password1");
         assertNotNull(account);
@@ -52,6 +55,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
+    @DisplayName("failed login")
     void testLogin_Failure() {
         assertThrows(IllegalArgumentException.class, () -> {
             authenticationService.login("id", "password");
@@ -59,6 +63,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
+    @DisplayName("is login")
     void testIsLogin() {
         assertFalse(authenticationService.isLogin());
         authenticationService.login("1", "password1");
@@ -66,6 +71,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
+    @DisplayName("logout")
     void testLogout() {
         authenticationService.login("1", "password1");
         String message = authenticationService.logout();

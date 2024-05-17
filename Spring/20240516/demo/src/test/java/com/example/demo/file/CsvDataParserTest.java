@@ -3,6 +3,7 @@ package com.example.demo.file;
 import com.example.demo.domain.Account;
 import com.example.demo.domain.Price;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -22,6 +23,7 @@ class CsvDataParserTest {
     }
 
     @Test
+    @DisplayName("read account")
     public void testReadAccount() {
         List<Account> accounts = csvDataParser.readAccount(accountFilePath);
 
@@ -40,6 +42,7 @@ class CsvDataParserTest {
     }
 
     @Test
+    @DisplayName("read price")
     public void testReadPrice() {
         List<Price> prices = csvDataParser.readPrice(tariffFilePath);
 
