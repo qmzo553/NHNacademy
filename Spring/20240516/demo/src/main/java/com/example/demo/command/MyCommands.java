@@ -26,8 +26,7 @@ public class MyCommands {
 
     @ShellMethod
     public String currentUser() {
-
-        return "hi";
+        return authenticationService.getCurrentLoginList();
     }
 
     @ShellMethod

@@ -29,8 +29,17 @@ public class AuthenticationService {
         currentLoginList = new ArrayList<>();
     }
 
-    public List<Account> getCurrentLoginList() {
-        return currentLoginList;
+    public String getCurrentLoginList() {
+        if(currentLoginList.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for(Account account : currentLoginList) {
+            builder.append(account.toString()).append(System.lineSeparator());
+        }
+
+        return builder.toString();
     }
 
     public Account login(String id, String password) {
