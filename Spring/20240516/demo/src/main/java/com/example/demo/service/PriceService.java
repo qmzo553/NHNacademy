@@ -5,6 +5,7 @@ import com.example.demo.file.DataParser;
 import com.example.demo.formmat.OutputFormatter;
 import com.example.demo.properties.FileProperties;
 import jakarta.annotation.PostConstruct;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
+@Data
 public class PriceService {
 
     private final DataParser dataParser;

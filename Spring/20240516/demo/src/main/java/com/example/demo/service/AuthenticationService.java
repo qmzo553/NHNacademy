@@ -6,6 +6,7 @@ import com.example.demo.properties.FileProperties;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Component
 @Getter
+@Setter
 public class AuthenticationService {
 
     private final DataParser dataParser;
