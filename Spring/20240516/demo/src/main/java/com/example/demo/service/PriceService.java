@@ -37,26 +37,63 @@ public class PriceService {
             return "";
         }
 
-        Set<String> Cities = priceList.stream()
+        Set<String> cities = priceList.stream()
                 .map(Price::getCity)
                 .collect(Collectors.toCollection(HashSet::new));
 
         StringBuilder builder = new StringBuilder();
         builder.append("[");
-        String joinedCities = String.join(", ", Cities);
+        String joinedCities = String.join(", ", cities);
         builder.append(joinedCities);
         builder.append("]");
 
         return builder.toString();
     }
 
+    public String getSectors(String city) {
+        if(priceList.isEmpty()) {
+            return "";
+        }
+
+        Set<String> sectors = priceList.stream()
+                .filter(price -> price.getCity().equals(city))
+                .map(Price::getSector)
+                .collect(Collectors.toCollection(HashSet::new));
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        String joinedSectors = String.join(", ", sectors);
+        builder.append(joinedSectors);
+        builder.append("]");
+
+        return builder.toString();
+    }
+
+    public String getUnitPriceByCityAndSector(String city, String sector) {
+        Price price = getPriceByCityAndSector(city, sector);
+
+        if(price == null) {
+            throw new IllegalArgumentException("일치하는 도시가 없습니다.");
+        }
+
+        return String.format("Price(id=%d, city=%s, sector=%s, unitPrice=%d", price.getId(), price.getCity(), price.getSector(), price.getUnitPrice());
+    }
+
+    private Price getPriceByCityAndSector(String city, String sector) {
+        Optional<Price> priceOptional = priceList.stream()
+                .filter(price -> price.getCity().equals(city) && price.getSector().equals(sector))
+                .findFirst();
+
+        return priceOptional.orElse(null);
+    }
+
     private Price getPriceByCityAndSectorAndUsage(String city, String sector, int usage) {
-        Optional<Price> result = priceList.stream()
+        Optional<Price> priceOptional = priceList.stream()
                 .filter(price -> price.getCity().equals(city) && price.getSector().equals(sector))
                 .filter(price -> price.getStartSection() <= usage && price.getEndSection() >= usage)
                 .findFirst();
 
-        return result.orElse(null);
+        return priceOptional.orElse(null);
     }
 
 }

@@ -36,12 +36,12 @@ public class MyCommands {
 
     @ShellMethod
     public String sector(String city) {
-        return null;
+        return priceService.getSectors(city);
     }
 
     @ShellMethod
     public String price(String city, String sector) {
-        return null;
+        return priceService.getUnitPriceByCityAndSector(city, sector);
     }
 
     @ShellMethod
