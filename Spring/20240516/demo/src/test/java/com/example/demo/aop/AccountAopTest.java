@@ -2,31 +2,57 @@ package com.example.demo.aop;
 
 import com.example.demo.command.MyCommands;
 import com.example.demo.service.AuthenticationService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.aop.support.AopUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.util.AopTestUtils;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class AccountAopTest {
 
-    @Autowired
-    private MyCommands commands;
+    @Mock
+    private MyCommands myCommands;
+
+    @Mock
+    private AuthenticationService authenticationService;
+
+    @InjectMocks
+    private AccountAop accountAop;
+
+    private MyCommands proxy;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        AspectJProxyFactory factory = new AspectJProxyFactory(myCommands);
+        factory.addAspect(accountAop);
+        proxy = factory.getProxy();
+    }
 
     @Test
-    @DisplayName("login aop")
-    void login() {
-        commands.login("1", "1");
+    @DisplayName("login")
+    void testBeforeLogin() {
+        when(myCommands.login("user1", "password1")).thenReturn("loginSuccess");
+        String result = proxy.login("user1", "password1");
 
-        assertTrue(AopUtils.isAopProxy(commands));
+        verify(myCommands).login("user1", "password1");
+        assertEquals("loginSuccess", result);
+    }
 
+    @Test
+    @DisplayName("logout")
+    void testBeforeLogout() {
+        when(myCommands.logout()).thenReturn("logoutSuccess");
+        String result = proxy.logout();
 
-        MyCommands targetCommands = AopTestUtils.getTargetObject(commands);
-        assertFalse(AopUtils.isAopProxy(targetCommands));
+        verify(myCommands).logout();
+        assertEquals("logoutSuccess", result);
     }
 }
