@@ -18,20 +18,15 @@ class AccountAopTest {
     @Autowired
     private MyCommands commands;
 
-    @Autowired
-    private AuthenticationService authenticationService;
-
     @Test
     @DisplayName("login aop")
     void login() {
-
-        MyCommands testCommands = AopTestUtils.getTargetObject(commands);
-
-        testCommands.login("1", "1");
-
         commands.login("1", "1");
 
-        assertFalse(AopUtils.isAopProxy(testCommands));
         assertTrue(AopUtils.isAopProxy(commands));
+
+
+        MyCommands targetCommands = AopTestUtils.getTargetObject(commands);
+        assertFalse(AopUtils.isAopProxy(targetCommands));
     }
 }
