@@ -3,9 +3,11 @@ package com.nhnacademy.student.repository;
 import com.nhnacademy.student.domain.Student;
 
 public interface StudentRepository {
-    boolean exists(long id);
+    boolean exists(String id);
 
-    Student register(String name, String email, int score, String comment);
+    Student register(String id, String password, String name, String email, int score, String comment);
 
-    Student getStudent(long id);
+    Student getStudent(String id);
+
+    boolean matches(String id, String password);
 }
