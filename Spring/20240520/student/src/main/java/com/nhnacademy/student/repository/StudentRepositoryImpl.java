@@ -32,7 +32,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public void modify(String id, String password, String name, String email, int score, String comment) {
+    public Student modify(String id, String password, String name, String email, int score, String comment) {
         Student student = getStudent(id);
         student.setPassword(password);
         student.setName(name);
@@ -40,6 +40,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         student.setScore(score);
         student.setComment(comment);
         studentMap.put(id, student);
+        return student;
     }
 
     @Override

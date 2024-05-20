@@ -19,11 +19,9 @@ public class StudentLoginController {
     private final StudentRepository studentRepository;
 
     @GetMapping
-    public String login(@CookieValue(value = "SESSION", required = false) String sessionId,
+    public String login(@CookieValue(value = "SESSION", required = false) String id,
                         HttpServletRequest request) {
-        if (StringUtils.hasText(sessionId)) {
-            HttpSession session = request.getSession();
-            String id = (String) session.getAttribute("id");
+        if (StringUtils.hasText(id)) {
             return "redirect:/student/" + id;
         } else {
             return "loginForm";
@@ -38,7 +36,6 @@ public class StudentLoginController {
                           ModelMap modelMap) {
         if (studentRepository.matches(id, pwd)) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("id", id);
 
             Cookie cookie = new Cookie("SESSION", id);
             response.addCookie(cookie);

@@ -17,8 +17,8 @@ public class StudentController {
 
     @ModelAttribute("student")
     public Student studentAttributes(@PathVariable("studentId") String id,
-                                     @CookieValue(value = "SESSION", required = false) String sessionId) {
-        if(!StringUtils.hasText(sessionId)) {
+                                     @CookieValue(value = "SESSION", required = false) String studendId) {
+        if (!StringUtils.hasText(studendId)) {
             throw new NotLoginException("로그인이 필요합니다.");
         }
         return studentRepository.getStudent(id);
@@ -26,7 +26,8 @@ public class StudentController {
 
     @GetMapping(value = "/{studentId}", params = {"!hideScore"})
     public String viewStudent(@ModelAttribute("student") Student student, Model model) {
-        model.addAttribute("student", student);
+        Student maskStudent = Student.constructPasswordMaskedStudent(student);
+        model.addAttribute("student", maskStudent);
         return "studentView";
     }
 
@@ -43,7 +44,8 @@ public class StudentController {
                              @RequestParam("email") String email,
                              @RequestParam("score") int score,
                              @RequestParam("comment") String comment) {
-        studentRepository.modify(id, password, name, email, score, comment);
-        return "studentView";
+        Student student = studentRepository.modify(id, password, name, email, score, comment);
+        return "redirect:/student/" + student.getId();
     }
+
 }

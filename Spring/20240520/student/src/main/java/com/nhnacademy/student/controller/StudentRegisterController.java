@@ -22,7 +22,7 @@ public class StudentRegisterController {
 
     @PostMapping
     public ModelAndView registerStudent(@ModelAttribute StudentRegisterRequest studentRegisterRequest) {
-        Student student = studentRepository.register(
+        studentRepository.register(
                 studentRegisterRequest.getId(),
                 studentRegisterRequest.getPassword(),
                 studentRegisterRequest.getName(),
@@ -30,8 +30,7 @@ public class StudentRegisterController {
                 studentRegisterRequest.getScore(),
                 studentRegisterRequest.getComment());
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/student/" + student.getId());
-        modelAndView.addObject("studentId", student.getId());
+        ModelAndView modelAndView = new ModelAndView("redirect:/login");
 
         return modelAndView;
     }
