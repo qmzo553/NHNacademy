@@ -6,10 +6,7 @@ import com.nhnacademy.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -34,7 +31,7 @@ public class StudentRegisterController {
                 studentRegisterRequest.getComment());
 
         ModelAndView modelAndView = new ModelAndView("redirect:/student/" + student.getId());
-        modelAndView.addObject("student", student);
+        modelAndView.addObject("studentId", student.getId());
 
         return modelAndView;
     }

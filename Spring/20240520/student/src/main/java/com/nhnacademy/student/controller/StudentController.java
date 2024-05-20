@@ -1,14 +1,13 @@
 package com.nhnacademy.student.controller;
 
 import com.nhnacademy.student.domain.Student;
+import com.nhnacademy.student.exception.NotLoginException;
 import com.nhnacademy.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,20 +15,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
     private final StudentRepository studentRepository;
 
+    @ModelAttribute("student")
+    public Student studentAttributes(@PathVariable("studentId") String id,
+                                     @CookieValue(value = "SESSION", required = false) String sessionId) {
+        if(!StringUtils.hasText(sessionId)) {
+            throw new NotLoginException("로그인이 필요합니다.");
+        }
+        return studentRepository.getStudent(id);
+    }
+
     @GetMapping("/{studentId}")
-    public String viewStudent(@PathVariable("studentId") String id, Model model) {
-        Student student = studentRepository.getStudent(id);
+    public String viewStudent(@ModelAttribute("student") Student student, Model model) {
         model.addAttribute("student", student);
         return "studentView";
     }
 
     @GetMapping("/{studentId}/modify")
-    public String studentModifyForm() {
+    public String studentModifyForm(@ModelAttribute("student") Student student, Model model) {
+        model.addAttribute("student", student);
         return "studentModify";
     }
 
-    @PostMapping("/{studentId}/modify")
-    public String modifyUser() {
+    @PostMapping("/modify")
+    public String modifyUser(@RequestParam("id") String id,
+                             @RequestParam("password") String password,
+                             @RequestParam("name") String name,
+                             @RequestParam("email") String email,
+                             @RequestParam("score") int score,
+                             @RequestParam("comment") String comment) {
+        studentRepository.modify(id, password, name, email, score, comment);
         return "studentView";
     }
 }

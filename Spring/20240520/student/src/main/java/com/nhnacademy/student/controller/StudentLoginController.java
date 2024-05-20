@@ -38,8 +38,9 @@ public class StudentLoginController {
                           ModelMap modelMap) {
         if (studentRepository.matches(id, pwd)) {
             HttpSession session = request.getSession(true);
+            session.setAttribute("id", id);
 
-            Cookie cookie = new Cookie("SESSION", session.getId());
+            Cookie cookie = new Cookie("SESSION", id);
             response.addCookie(cookie);
 
             modelMap.put("id", id);
