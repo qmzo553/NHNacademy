@@ -1,6 +1,7 @@
 package com.nhnacademy.student.controller;
 
 import com.nhnacademy.student.domain.Student;
+import com.nhnacademy.student.domain.StudentRegisterRequest;
 import com.nhnacademy.student.exception.NotLoginException;
 import com.nhnacademy.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class StudentController {
 
     @ModelAttribute("student")
     public Student studentAttributes(@PathVariable("studentId") String id,
-                                     @CookieValue(value = "SESSION", required = false) String studendId) {
-        if (!StringUtils.hasText(studendId)) {
+                                     @CookieValue(value = "SESSION", required = false) String sessionId) {
+        if (!StringUtils.hasText(sessionId)) {
             throw new NotLoginException("로그인이 필요합니다.");
         }
         return studentRepository.getStudent(id);
@@ -37,14 +38,15 @@ public class StudentController {
         return "studentModify";
     }
 
-    @PostMapping("/modify")
-    public String modifyUser(@RequestParam("id") String id,
-                             @RequestParam("password") String password,
-                             @RequestParam("name") String name,
-                             @RequestParam("email") String email,
-                             @RequestParam("score") int score,
-                             @RequestParam("comment") String comment) {
-        Student student = studentRepository.modify(id, password, name, email, score, comment);
+    @PostMapping("/{studentId}/modify")
+    public String modifyUser(@ModelAttribute("studentRegisterRequest") StudentRegisterRequest studentRegisterRequest) {
+        Student student = studentRepository.modify(
+                studentRegisterRequest.getId(),
+                studentRegisterRequest.getPassword(),
+                studentRegisterRequest.getName(),
+                studentRegisterRequest.getEmail(),
+                studentRegisterRequest.getScore(),
+                studentRegisterRequest.getComment());
         return "redirect:/student/" + student.getId();
     }
 

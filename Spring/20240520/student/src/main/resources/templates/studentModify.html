@@ -5,8 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" action="/student/modify">
-    아이디: <input type="text" name="id" th:value="${student.id}"/><br />
+<form method="post" th:action="@{/student/{id}/modify(id=${student.id})}">
+    아이디: <span th:text="${student.id}"></span><br />
+    <input type="hidden" name="id" th:value="${student.id}"/>
     비밀번호: <input type="password" name="password" th:value="${student.password}"/><br />
     이름: <input type="text" name="name" th:value="${student.name}"/><br />
     이메일: <input type="text" name="email" th:value="${student.email}"/><br />
