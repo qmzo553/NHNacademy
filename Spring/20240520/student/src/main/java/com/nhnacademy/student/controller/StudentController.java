@@ -24,7 +24,7 @@ public class StudentController {
         return studentRepository.getStudent(id);
     }
 
-    @GetMapping("/{studentId}")
+    @GetMapping(value = "/{studentId}", params = {"!hideScore"})
     public String viewStudent(@ModelAttribute("student") Student student, Model model) {
         model.addAttribute("student", student);
         return "studentView";
