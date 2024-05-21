@@ -20,7 +20,8 @@ public class StudentHideController {
                                    @RequestParam(name = "hideScore") String hideScore,
                                    Model model) {
         Student student = studentRepository.getStudent(id);
-        model.addAttribute("student", student);
+        Student maskStudent = Student.constructPasswordMaskedStudent(student);
+        model.addAttribute("student", maskStudent);
         model.addAttribute("hideScore", hideScore != null ? hideScore : "no");
         return "studentView";
     }

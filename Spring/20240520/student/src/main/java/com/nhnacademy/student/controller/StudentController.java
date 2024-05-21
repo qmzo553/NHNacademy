@@ -32,6 +32,11 @@ public class StudentController {
         return "studentView";
     }
 
+//    @GetMapping("/")
+//    public String index(Model model) {
+//        return "index";
+//    }
+
     @GetMapping("/{studentId}/modify")
     public String studentModifyForm(@ModelAttribute("student") Student student, Model model) {
         model.addAttribute("student", student);
