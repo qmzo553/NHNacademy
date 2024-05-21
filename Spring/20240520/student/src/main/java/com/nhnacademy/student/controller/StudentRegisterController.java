@@ -1,11 +1,13 @@
 package com.nhnacademy.student.controller;
 
-import com.nhnacademy.student.domain.Student;
-import com.nhnacademy.student.domain.StudentRegisterRequest;
+import com.nhnacademy.student.domain.StudentRequest;
+import com.nhnacademy.student.exception.ValidationFailedException;
 import com.nhnacademy.student.repository.StudentRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,7 +23,12 @@ public class StudentRegisterController {
     }
 
     @PostMapping
-    public ModelAndView registerStudent(@ModelAttribute StudentRegisterRequest studentRegisterRequest) {
+    public ModelAndView registerStudent(@Valid @ModelAttribute StudentRequest studentRegisterRequest,
+                                        BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
+
         studentRepository.register(
                 studentRegisterRequest.getId(),
                 studentRegisterRequest.getPassword(),
