@@ -18,16 +18,18 @@
                 <div class="card-body">
                     <form method="post" action="/login">
                         <div class="form-group">
-                            <label for="id">ID</label>
+                            <label for="id"><span th:text="#{id}"></span></label>
                             <input type="text" class="form-control" id="id" name="id" required>
                         </div>
                         <div class="form-group">
-                            <label for="pwd">PWD</label>
+                            <label for="pwd"><span th:text="#{password}"></span></label>
                             <input type="password" class="form-control" id="pwd" name="pwd" required>
                         </div>
                         <button type="submit" class="btn btn-success btn-block">Submit</button>
                     </form>
                 </div>
+                <a href="?locale=ko">ko</a><br />
+                <a href="?locale=en">en</a><br />
             </div>
         </div>
     </div>

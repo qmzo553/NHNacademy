@@ -11,37 +11,39 @@
 <div class="container mt-5">
     <div class="card">
         <div class="card-header">
-            <h3>학생 등록</h3>
+            <h3><span th:text="#{studentRegister}"></span></h3>
         </div>
         <div class="card-body">
             <form method="post" action="/student/register">
                 <div class="form-group">
-                    <label for="id">아이디</label>
+                    <label for="id"><span th:text="#{id}"></span></label>
                     <input type="text" class="form-control" id="id" name="id" required />
                 </div>
                 <div class="form-group">
-                    <label for="password">비밀번호</label>
+                    <label for="password"><span th:text="#{password}"></span></label>
                     <input type="password" class="form-control" id="password" name="password" required />
                 </div>
                 <div class="form-group">
-                    <label for="name">이름</label>
+                    <label for="name"><span th:text="#{name}"></span></label>
                     <input type="text" class="form-control" id="name" name="name" required />
                 </div>
                 <div class="form-group">
-                    <label for="email">이메일</label>
+                    <label for="email"><span th:text="#{email}"></span></label>
                     <input type="text" class="form-control" id="email" name="email" required />
                 </div>
                 <div class="form-group">
-                    <label for="score">성적</label>
+                    <label for="score"><span th:text="#{score}"></span></label>
                     <input type="number" class="form-control" id="score" name="score" required />
                 </div>
                 <div class="form-group">
-                    <label for="comment">평가</label>
+                    <label for="comment"><span th:text="#{comment}"></span></label>
                     <textarea class="form-control" id="comment" name="comment" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-success btn-block">등록</button>
+                <button type="submit" class="btn btn-success btn-block"><span th:text="#{submit}"></span></button>
             </form>
         </div>
+        <a href="?locale=ko">ko</a><br />
+        <a href="?locale=en">en</a><br />
     </div>
 </div>
 <!-- Bootstrap JS and dependencies (optional for some components like modals) -->

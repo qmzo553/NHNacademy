@@ -6,7 +6,6 @@ import com.nhnacademy.student.exception.NotLoginException;
 import com.nhnacademy.student.exception.ValidationFailedException;
 import com.nhnacademy.student.repository.StudentRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

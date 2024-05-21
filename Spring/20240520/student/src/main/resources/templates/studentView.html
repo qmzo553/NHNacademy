@@ -15,35 +15,37 @@
         </div>
         <div class="card-body">
             <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">아이디:</div>
+                <div class="col-sm-3 font-weight-bold"><span th:text="#{id}"></span>:</div>
                 <div class="col-sm-9"><span th:text="${student.id}"></span></div>
             </div>
             <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">비밀번호:</div>
+                <div class="col-sm-3 font-weight-bold"><span th:text="#{password}"></span>:</div>
                 <div class="col-sm-9"><span th:text="${student.password}"></span></div>
             </div>
             <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">이름:</div>
+                <div class="col-sm-3 font-weight-bold"><span th:text="#{name}"></span>:</div>
                 <div class="col-sm-9"><span th:text="${student.name}"></span></div>
             </div>
             <div class="row mb-3">
-                <div class="col-sm-3 font-weight-bold">이메일:</div>
+                <div class="col-sm-3 font-weight-bold"><span th:text="#{email}"></span>:</div>
                 <div class="col-sm-9"><span th:text="${student.email}"></span></div>
             </div>
             <div th:if="${hideScore == 'no'}">
                 <div class="row mb-3">
-                    <div class="col-sm-3 font-weight-bold">성적:</div>
+                    <div class="col-sm-3 font-weight-bold"><span th:text="#{score}"></span>:</div>
                     <div class="col-sm-9"><span th:text="${student.score}"></span></div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 font-weight-bold">평가:</div>
+                    <div class="col-sm-3 font-weight-bold"><span th:text="#{comment}"></span>:</div>
                     <div class="col-sm-9"><span th:text="${student.comment}"></span></div>
                 </div>
             </div>
         </div>
         <div class="card-footer text-right">
-            <a class="btn btn-success btn-block" th:href="@{/student/{id}/modify(id=${student.id})}">정보 수정</a>
+            <a class="btn btn-success btn-block" th:href="@{/student/{id}/modify(id=${student.id})}"><span th:text="#{modify}"></span></a>
         </div>
+        <a href="?locale=ko">ko</a><br />
+        <a href="?locale=en">en</a><br />
     </div>
 </div>
 <!-- Bootstrap JS and dependencies (optional for some components like modals) -->
