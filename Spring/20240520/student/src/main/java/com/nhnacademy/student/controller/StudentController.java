@@ -8,11 +8,13 @@ import com.nhnacademy.student.repository.StudentRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Controller
 @RequiredArgsConstructor
@@ -57,6 +59,13 @@ public class StudentController {
                 studentRequest.getScore(),
                 studentRequest.getComment());
         return "redirect:/student/" + student.getId();
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public String noHandlerFound(NoHandlerFoundException e, Model model) {
+        model.addAttribute("exception", e);
+        model.addAttribute("status", HttpStatus.NOT_FOUND);
+        return "error";
     }
 
 }
