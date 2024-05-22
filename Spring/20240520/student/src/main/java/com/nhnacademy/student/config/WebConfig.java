@@ -1,5 +1,6 @@
 package com.nhnacademy.student.config;
 
+import com.nhnacademy.student.interceptor.LoginInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,5 +30,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LocaleChangeInterceptor());
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/student/*");
     }
 }

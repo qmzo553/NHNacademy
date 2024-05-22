@@ -2,7 +2,6 @@ package com.nhnacademy.student.controller;
 
 import com.nhnacademy.student.domain.Student;
 import com.nhnacademy.student.domain.StudentRequest;
-import com.nhnacademy.student.exception.NotLoginException;
 import com.nhnacademy.student.exception.ValidationFailedException;
 import com.nhnacademy.student.repository.StudentRepository;
 import jakarta.validation.Valid;
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -22,11 +20,7 @@ public class StudentController {
     private final StudentRepository studentRepository;
 
     @ModelAttribute("student")
-    public Student studentAttributes(@PathVariable("studentId") String id,
-                                     @CookieValue(value = "SESSION", required = false) String sessionId) {
-        if (!StringUtils.hasText(sessionId)) {
-            throw new NotLoginException("로그인이 필요합니다.");
-        }
+    public Student studentAttributes(@PathVariable("studentId") String id) {
         return studentRepository.getStudent(id);
     }
 
