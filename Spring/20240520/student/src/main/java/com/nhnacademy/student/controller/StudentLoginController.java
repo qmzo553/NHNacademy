@@ -44,7 +44,8 @@ public class StudentLoginController {
     @GetMapping("/logout")
     public String doLogout(@CookieValue(value = "SESSION", required = false) String id,
                            HttpServletResponse response) {
-        Cookie cookie = new Cookie("SESSION", null);
+        Cookie cookie = new Cookie("SESSION", "");
+        cookie.setMaxAge(0);
         response.addCookie(cookie);
 
         return "redirect:/login";

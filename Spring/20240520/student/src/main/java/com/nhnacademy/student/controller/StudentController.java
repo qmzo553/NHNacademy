@@ -2,6 +2,7 @@ package com.nhnacademy.student.controller;
 
 import com.nhnacademy.student.domain.Student;
 import com.nhnacademy.student.domain.StudentRequest;
+import com.nhnacademy.student.exception.StudentNotFoundException;
 import com.nhnacademy.student.exception.ValidationFailedException;
 import com.nhnacademy.student.repository.StudentRepository;
 import jakarta.validation.Valid;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +21,9 @@ public class StudentController {
 
     @ModelAttribute("student")
     public Student studentAttributes(@PathVariable("studentId") String id) {
+        if(!studentRepository.exists(id)) {
+            throw new StudentNotFoundException(id);
+        }
         return studentRepository.getStudent(id);
     }
 
@@ -54,8 +57,8 @@ public class StudentController {
         return "redirect:/student/" + student.getId();
     }
 
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public String noHandlerFound(NoHandlerFoundException e, Model model) {
+    @ExceptionHandler(StudentNotFoundException.class)
+    public String notFound(StudentNotFoundException e, Model model) {
         model.addAttribute("exception", e);
         model.addAttribute("status", HttpStatus.NOT_FOUND);
         return "error";
