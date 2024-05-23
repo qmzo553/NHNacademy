@@ -32,7 +32,7 @@ public class AccountController {
                 return "redirect:/cs/admin" + id;
             }
         }
-        return "customer/loginForm";
+        return "login/loginForm";
     }
 
     @PostMapping("/login")

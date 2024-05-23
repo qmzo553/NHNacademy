@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Inquiries</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">모든 문의 목록</h1>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th>제목</th>
+            <th>분류</th>
+            <th>작성일시</th>
+            <th>답변여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inquiry : ${inquiryList}">
+            <td>
+                <a th:href="@{/cs/admin/answer/{id}(id=${inquiry.inquiryId})}"
+                   th:text="${inquiry.title}"></a>
+            </td>
+            <td th:text="${inquiry.category}"></td>
+            <td th:text="${inquiry.createAt}"></td>
+            <td th:text="${inquiry.answerStatus ? 'YES' : 'NO'}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

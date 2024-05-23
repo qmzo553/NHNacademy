@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inquiry Detail</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>문의 상세 보기</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 th:text="${inquiry.title}">제목</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>분류:</strong> <span th:text="${inquiry.category}">분류</span></p>
+            <p><strong>작성날짜:</strong> <span th:text="${inquiry.createAt}">작성날짜</span></p>
+            <p><strong>내용:</strong></p>
+            <p th:text="${inquiry.content}">내용</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>답변 작성</h3>
+        </div>
+        <div class="card-body">
+            <form action="/cs/admin/answer" method="post">
+                <input type="hidden" name="inquiryId" th:value="${inquiry.inquiryId}">
+                <div class="form-group">
+                    <label for="managerId">작성자 ID</label>
+                    <input type="text" class="form-control" id="managerId" name="managerId" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">답변 내용</label>
+                    <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">답변 저장</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="/cs/admin/" class="btn btn-secondary mt-4">뒤로가기</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

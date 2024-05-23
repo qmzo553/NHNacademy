@@ -11,6 +11,10 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     Map<String, List<Inquiry>> inquiryMap = new HashMap<>();
 
+    public InquiryRepositoryImpl() {
+        inquiryMap.put("user", List.of(Inquiry.create("테스트", "테스트", "user", Inquiry.Category.OTHER)));
+    }
+
     @Override
     public List<Inquiry> getInquiryListByCustomerId(String customerId) {
         List<Inquiry> inquiryList = inquiryMap.get(customerId);
