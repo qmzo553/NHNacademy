@@ -7,9 +7,9 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4">My Inquiries</h1>
+    <h1 class="mb-4">내 문의 목록</h1>
     <div class="mb-4">
-        <a href="/inquiry/new" class="btn btn-primary">문의하기</a>
+        <a href="/cs/inquiry" class="btn btn-primary">문의하기</a>
     </div>
     <table class="table table-bordered">
         <thead class="thead-light">
@@ -23,7 +23,7 @@
         <tbody>
         <tr th:each="inquiry : ${inquiryList}">
             <td>
-                <a th:href="@{/inquiries/{id}(id=${inquiry.inquiryId})}"
+                <a th:href="@{/cs/inquiry/{id}(id=${inquiry.inquiryId})}"
                    th:text="${inquiry.title}"></a>
             </td>
             <td th:text="${inquiry.category}"></td>

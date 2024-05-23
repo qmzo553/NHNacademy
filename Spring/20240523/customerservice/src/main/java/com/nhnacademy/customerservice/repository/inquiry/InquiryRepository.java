@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface InquiryRepository {
 
-    boolean exists(String customerId);
     List<Inquiry> getInquiryListByCustomerId(String customerId);
+    List<Inquiry> getNoAnswerYet();
     void saveInquiry(Inquiry inquiry, String customerId);
     Inquiry getInquiryById(Long inquiryId);
 }

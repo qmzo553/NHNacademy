@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inquiry Detail</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>문의 상세 보기</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 th:text="${inquiry.title}">제목</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>분류:</strong> <span th:text="${inquiry.category}">분류</span></p>
+            <p><strong>작성날짜:</strong> <span th:text="${inquiry.createAt}">작성날짜</span></p>
+            <p><strong>내용:</strong></p>
+            <p th:text="${inquiry.content}">내용</p>
+        </div>
+    </div>
+
+    <div th:if="${answer != null}" class="card">
+        <div class="card-header">
+            <h3>답변</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>담당자ID:</strong> <span th:text="${answer.managerId}">담당자ID</span></p>
+            <p><strong>작성날짜:</strong> <span th:text="${answer.createAt}">작성날짜</span></p>
+            <p><strong>답변내용:</strong></p>
+            <p th:text="${answer.content}">답변내용</p>
+        </div>
+    </div>
+
+    <a th:href="@{'/cs/' + ${id}}" class="btn btn-secondary mt-4">뒤로가기</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

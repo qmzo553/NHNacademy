@@ -2,29 +2,20 @@ package com.nhnacademy.customerservice.repository.inquiry;
 
 import com.nhnacademy.customerservice.domain.inquiry.Inquiry;
 import com.nhnacademy.customerservice.exception.InquiryNotFoundException;
+import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+@Repository
 public class InquiryRepositoryImpl implements InquiryRepository {
 
     Map<String, List<Inquiry>> inquiryMap = new HashMap<>();
 
     @Override
-    public boolean exists(String customerId) {
-        if(customerId == null || customerId.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-
-        return inquiryMap.containsKey(customerId);
-    }
-
-    @Override
     public List<Inquiry> getInquiryListByCustomerId(String customerId) {
-        if(!exists(customerId)) {
-            throw new InquiryNotFoundException();
+        List<Inquiry> inquiryList = inquiryMap.get(customerId);
+        if(inquiryList == null) {
+            return new ArrayList<>();
         }
 
         return inquiryMap.get(customerId);
@@ -33,11 +24,12 @@ public class InquiryRepositoryImpl implements InquiryRepository {
     @Override
     public void saveInquiry(Inquiry inquiry, String customerId) {
         if(inquiry == null) {
-            throw new IllegalArgumentException();
+            throw new InquiryNotFoundException();
         }
 
         List<Inquiry> inquiryList = getInquiryListByCustomerId(customerId);
         inquiryList.add(inquiry);
+        Collections.sort(inquiryList);
         inquiryMap.put(customerId, inquiryList);
     }
 
@@ -49,5 +41,13 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                 .findFirst();
 
         return inquiry.orElse(null);
+    }
+
+    @Override
+    public List<Inquiry> getNoAnswerYet() {
+        return inquiryMap.values().stream()
+                .flatMap(List::stream)
+                .filter(Inquiry -> !Inquiry.isAnswerStatus())
+                .toList();
     }
 }

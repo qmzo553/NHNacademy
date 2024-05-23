@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cs")
 public class AccountController {
 
-    private static final String CUSTOMER_COOKIE_NAME = "customer";
-    private static final String MANAGER_COOKIE_NAME = "manager";
-    private static final String LOGIN_COOKIE_NAME = "SESSION";
+    public static final String CUSTOMER_COOKIE_NAME = "customer";
+    public static final String MANAGER_COOKIE_NAME = "manager";
+    public static final String LOGIN_COOKIE_NAME = "SESSION";
     private final UserRepository userRepository;
 
     @GetMapping("/login")
@@ -32,7 +32,7 @@ public class AccountController {
                 return "redirect:/cs/admin" + id;
             }
         }
-        return "loginForm";
+        return "customer/loginForm";
     }
 
     @PostMapping("/login")

@@ -3,6 +3,7 @@ package com.nhnacademy.customerservice.controller;
 import com.nhnacademy.customerservice.exception.AnswerNotFoundException;
 import com.nhnacademy.customerservice.exception.InquiryNotFoundException;
 import com.nhnacademy.customerservice.exception.UserNotFoundException;
+import com.nhnacademy.customerservice.exception.ValidationFailedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class WebControllerAdvice {
         return "error";
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler({IllegalArgumentException.class, ValidationFailedException.class})
     public String handleIllegalArgumentException(IllegalArgumentException ex, Model model) {
         log.error("IllegalArgumentException", ex);
         model.addAttribute("message", ex.getMessage());

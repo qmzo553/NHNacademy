@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Inquiry</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">문의 하기</h1>
+    <form method="post" action="/cs/inquiry">
+        <div class="form-group">
+            <label for="title">문의제목</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="content">문의내용</label>
+            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="category">분류</label>
+            <select class="form-control" id="category" name="category" required>
+                <option value="COMPLAINT">COMPLAINT</option>
+                <option value="SUGGESTION">SUGGESTION</option>
+                <option value="REFUND_EXCHANGE">REFUND_EXCHANGE</option>
+                <option value="PRAISE">PRAISE</option>
+                <option value="OTHER">OTHER</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">확인</button>
+            <a th:href="@{'/cs/' + ${id}}" class="btn btn-secondary">취소</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

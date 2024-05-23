@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Inquiry {
+public class Inquiry implements Comparable<Inquiry>{
     private static long currentId = 0;
 
     public enum Category {
@@ -24,11 +24,16 @@ public class Inquiry {
     private String title;
     private String content;
     private LocalDateTime createAt;
+    private String writerId;
     private Category category;
     private boolean answerStatus;
 
-    public static Inquiry create(String title, String content, Category category) {
-        return new Inquiry(++currentId, title, content, LocalDateTime.now(), category, false);
+    public static Inquiry create(String title, String content, String writerId, Category category) {
+        return new Inquiry(++currentId, title, content, LocalDateTime.now(), writerId, category, false);
     }
 
+    @Override
+    public int compareTo(Inquiry other) {
+        return this.createAt.compareTo(other.createAt);
+    }
 }
