@@ -1,6 +1,6 @@
 package com.nhnacademy.customerservice.controller;
 
-import com.nhnacademy.customerservice.repository.CustomerRepository;
+import com.nhnacademy.customerservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cs")
 public class CustomerController {
 
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String customerMain() {

@@ -1,10 +1,11 @@
 package com.nhnacademy.customerservice.repository;
 
 import com.nhnacademy.customerservice.domain.Customer;
+import com.nhnacademy.customerservice.domain.User;
 
-public interface CustomerRepository {
+public interface UserRepository {
 
-    Customer getCustomer(String id);
+    User getUser(String id);
     boolean exists(String id);
     boolean matches(String id, String password);
 }

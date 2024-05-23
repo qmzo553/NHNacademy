@@ -11,7 +11,7 @@ public class Manager extends User {
         super(id, password, name, age, phoneNumber, email);
     }
 
-    public static Manager createManager(String id, String password, String name, int age, String phoneNumber, String email) {
+    public static Manager create(String id, String password, String name, int age, String phoneNumber, String email) {
         return new Manager(id, password, name, age, phoneNumber, email);
     }
 }

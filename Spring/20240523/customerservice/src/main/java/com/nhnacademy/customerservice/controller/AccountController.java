@@ -1,6 +1,6 @@
 package com.nhnacademy.customerservice.controller;
 
-import com.nhnacademy.customerservice.repository.CustomerRepository;
+import com.nhnacademy.customerservice.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class AccountController {
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/login")
     public String login(@CookieValue(value = "SESSION", required = false) String id) {
@@ -33,7 +33,7 @@ public class AccountController {
                           @RequestParam("pwd") String pwd,
                           HttpServletRequest request,
                           HttpServletResponse response) {
-        if (studentRepository.matches(id, pwd)) {
+        if (userRepository.matches(id, pwd)) {
             HttpSession session = request.getSession(true);
 
             Cookie cookie = new Cookie("SESSION", id);
