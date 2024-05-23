@@ -1,4 +1,4 @@
-package com.nhnacademy.customerservice.domain;
+package com.nhnacademy.customerservice.domain.user;
 
 import lombok.Getter;
 import lombok.Setter;

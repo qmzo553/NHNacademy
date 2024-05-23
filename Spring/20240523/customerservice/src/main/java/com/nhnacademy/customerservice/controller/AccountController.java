@@ -1,9 +1,9 @@
 package com.nhnacademy.customerservice.controller;
 
-import com.nhnacademy.customerservice.domain.Customer;
-import com.nhnacademy.customerservice.domain.Manager;
-import com.nhnacademy.customerservice.domain.User;
-import com.nhnacademy.customerservice.repository.UserRepository;
+import com.nhnacademy.customerservice.domain.user.Customer;
+import com.nhnacademy.customerservice.domain.user.Manager;
+import com.nhnacademy.customerservice.domain.user.User;
+import com.nhnacademy.customerservice.repository.user.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

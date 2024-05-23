@@ -1,4 +1,4 @@
-package com.nhnacademy.customerservice.domain;
+package com.nhnacademy.customerservice.domain.user;
 
 public class Customer extends User {
 

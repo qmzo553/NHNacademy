@@ -1,8 +1,8 @@
-package com.nhnacademy.customerservice.repository;
+package com.nhnacademy.customerservice.repository.user;
 
-import com.nhnacademy.customerservice.domain.Customer;
-import com.nhnacademy.customerservice.domain.Manager;
-import com.nhnacademy.customerservice.domain.User;
+import com.nhnacademy.customerservice.domain.user.Customer;
+import com.nhnacademy.customerservice.domain.user.Manager;
+import com.nhnacademy.customerservice.domain.user.User;
 import com.nhnacademy.customerservice.exception.UserNotFoundException;
 import org.springframework.stereotype.Repository;
 

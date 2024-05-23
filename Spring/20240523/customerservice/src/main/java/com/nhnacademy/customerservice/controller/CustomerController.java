@@ -1,6 +1,6 @@
 package com.nhnacademy.customerservice.controller;
 
-import com.nhnacademy.customerservice.repository.UserRepository;
+import com.nhnacademy.customerservice.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

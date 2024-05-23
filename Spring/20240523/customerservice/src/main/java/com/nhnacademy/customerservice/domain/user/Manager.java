@@ -1,10 +1,5 @@
-package com.nhnacademy.customerservice.domain;
+package com.nhnacademy.customerservice.domain.user;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class Manager extends User {
 
     public Manager(String id, String password, String name, int age, String phoneNumber, String email) {

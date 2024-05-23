@@ -1,5 +1,6 @@
 package com.nhnacademy.customerservice.controller;
 
+import com.nhnacademy.customerservice.exception.InquiryNotFoundException;
 import com.nhnacademy.customerservice.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class WebControllerAdvice {
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler({UserNotFoundException.class, InquiryNotFoundException.class})
     public String handleCustomerNotFoundException(UserNotFoundException ex, Model model) {
         log.error("UserNotFoundException", ex);
         model.addAttribute("message", ex.getMessage());
