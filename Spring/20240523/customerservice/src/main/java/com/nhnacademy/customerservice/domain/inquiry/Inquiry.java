@@ -25,9 +25,10 @@ public class Inquiry {
     private String content;
     private LocalDateTime createAt;
     private Category category;
+    private boolean answerStatus;
 
     public static Inquiry create(String title, String content, Category category) {
-        return new Inquiry(++currentId, title, content, LocalDateTime.now(), category);
+        return new Inquiry(++currentId, title, content, LocalDateTime.now(), category, false);
     }
 
 }
