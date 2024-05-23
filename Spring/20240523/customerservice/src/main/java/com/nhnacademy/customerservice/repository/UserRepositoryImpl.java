@@ -3,7 +3,7 @@ package com.nhnacademy.customerservice.repository;
 import com.nhnacademy.customerservice.domain.Customer;
 import com.nhnacademy.customerservice.domain.Manager;
 import com.nhnacademy.customerservice.domain.User;
-import com.nhnacademy.customerservice.exception.CustomerNotFoundException;
+import com.nhnacademy.customerservice.exception.UserNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -22,8 +22,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUser(String id) {
-        if(exists(id)) {
-            throw new CustomerNotFoundException();
+        if(!exists(id)) {
+            throw new UserNotFoundException();
         }
 
         return userMap.get(id);

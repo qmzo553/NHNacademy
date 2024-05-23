@@ -3,6 +3,7 @@ package com.nhnacademy.customerservice.controller;
 import com.nhnacademy.customerservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ public class ManagerController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String managerMain() {
+    public String index(Model model) {
         return null;
     }
 
@@ -25,7 +26,7 @@ public class ManagerController {
 //    }
 
     @PostMapping("/answer")
-    public String answer() {
+    public String doAnswer() {
         return null;
     }
 }
