@@ -2,9 +2,11 @@ package com.nhnacademy.customerservice.repository.answer;
 
 import com.nhnacademy.customerservice.domain.answer.Answer;
 
+import java.util.Optional;
+
 public interface AnswerRepository {
 
-    boolean exists(long inquiryId);
-    Answer getAnswer(long inquiryId);
-    Answer saveAnswer(Answer answer, long inquiryId);
+    Optional<Answer> getAnswerByInquiryId(long inquiryId);
+    int saveAnswer(Answer answer);
+    int countByInquiryId(long inquiryId);
 }

@@ -16,29 +16,33 @@ import java.io.IOException;
 @Slf4j
 public class WebControllerAdvice {
 
+    private final String MASSAGE_KEY = "message";
+    private final String STATUS_KEY = "status";
+    private final String ERROR_PAGE = "error";
+
     @ExceptionHandler({UserNotFoundException.class,
             InquiryNotFoundException.class,
             AnswerNotFoundException.class})
     public String handleCustomerNotFoundException(UserNotFoundException ex, Model model) {
         log.error("UserNotFoundException", ex);
-        model.addAttribute("message", ex.getMessage());
-        model.addAttribute("status", HttpStatus.NOT_FOUND);
-        return "error";
+        model.addAttribute(MASSAGE_KEY, ex.getMessage());
+        model.addAttribute(STATUS_KEY, HttpStatus.NOT_FOUND);
+        return ERROR_PAGE;
     }
 
     @ExceptionHandler({IllegalArgumentException.class, ValidationFailedException.class})
     public String handleIllegalArgumentException(IllegalArgumentException ex, Model model) {
         log.error("IllegalArgumentException", ex);
-        model.addAttribute("message", ex.getMessage());
-        model.addAttribute("status", HttpStatus.BAD_REQUEST);
-        return "error";
+        model.addAttribute(MASSAGE_KEY, ex.getMessage());
+        model.addAttribute(STATUS_KEY, HttpStatus.BAD_REQUEST);
+        return ERROR_PAGE;
     }
 
     @ExceptionHandler(IOException.class)
     public String handleIOException(IOException ex, Model model) {
         log.error("IOException", ex);
-        model.addAttribute("message", ex.getMessage());
-        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
-        return "error";
+        model.addAttribute(MASSAGE_KEY, ex.getMessage());
+        model.addAttribute(STATUS_KEY, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ERROR_PAGE;
     }
 }

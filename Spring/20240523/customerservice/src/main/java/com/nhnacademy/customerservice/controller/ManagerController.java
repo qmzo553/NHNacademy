@@ -41,13 +41,13 @@ public class ManagerController {
     public String doAnswer(@Valid @ModelAttribute AnswerRequest answerRequest,
                            @RequestParam Long inquiryId,
                            BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ValidationFailedException(bindingResult);
-        }
-        Inquiry inquiry = inquiryRepository.getInquiryById(inquiryId);
-        inquiry.setAnswerStatus(true);
-        Answer answer = Answer.create(answerRequest.getContent(), answerRequest.getManagerId());
-        answerRepository.saveAnswer(answer, inquiryId);
+//        if (bindingResult.hasErrors()) {
+//            throw new ValidationFailedException(bindingResult);
+//        }
+//        Inquiry inquiry = inquiryRepository.getInquiryById(inquiryId);
+//        inquiry.setAnswerStatus(true);
+//        Answer answer = Answer.create(answerRequest.getContent(), answerRequest.getManagerId());
+//        answerRepository.saveAnswer(answer, inquiryId);
         return "redirect:/cs/admin/";
     }
 }

@@ -101,16 +101,16 @@ public class CustomerController {
     public String showInquiry(@PathVariable Long inquiryId,
                               @CookieValue(value = LOGIN_COOKIE_NAME, required = false) String cookieId,
                               Model model) {
-        String id = cookieId.replace(CUSTOMER_COOKIE_NAME, "");
-
-        Inquiry inquiry = inquiryRepository.getInquiryById(inquiryId);
-
-        if(inquiry.isAnswerStatus()) {
-            model.addAttribute("answer", answerRepository.getAnswer(inquiryId));
-        }
-
-        model.addAttribute("id", id);
-        model.addAttribute("inquiry", inquiry);
+//        String id = cookieId.replace(CUSTOMER_COOKIE_NAME, "");
+//
+//        Inquiry inquiry = inquiryRepository.getInquiryById(inquiryId);
+//
+//        if(inquiry.isAnswerStatus()) {
+//            model.addAttribute("answer", answerRepository.getAnswer(inquiryId));
+//        }
+//
+//        model.addAttribute("id", id);
+//        model.addAttribute("inquiry", inquiry);
         return "customer/inquiry_detail";
     }
 }

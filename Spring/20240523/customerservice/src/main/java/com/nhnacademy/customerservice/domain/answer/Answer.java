@@ -11,11 +11,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Answer {
 
+    private Long inquiryId;
+    private String managerId;
     private String content;
     private LocalDateTime createAt;
-    private String managerId;
 
-    public static Answer create(String content, String managerId) {
-        return new Answer(content, LocalDateTime.now(), managerId);
+
+    public static Answer create(long inquiryId, String managerId, String content) {
+        return new Answer(inquiryId, managerId, content, LocalDateTime.now());
     }
 }
