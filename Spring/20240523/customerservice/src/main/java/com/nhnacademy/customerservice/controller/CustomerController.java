@@ -27,6 +27,7 @@ import static com.nhnacademy.customerservice.controller.AccountController.LOGIN_
 @RequestMapping("/cs")
 public class CustomerController {
 
+    private static final String UPLOAD_DIR = "/src/main/resources/uploads";
     private final InquiryRepository inquiryRepository;
     private final AnswerRepository answerRepository;
 
@@ -80,7 +81,7 @@ public class CustomerController {
 
         inquiryRepository.saveInquiry(inquiry, id);
 
-        String uploadDirPath = System.getProperty("user.dir") + File.separator + "uploads";
+        String uploadDirPath = System.getProperty("user.dir") + UPLOAD_DIR;
         File uploadDir = new File(uploadDirPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();

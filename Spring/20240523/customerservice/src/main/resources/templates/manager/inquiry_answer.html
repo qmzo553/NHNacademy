@@ -57,7 +57,7 @@
                 <h4>첨부 파일:</h4>
                 <ul>
                     <li th:each="file : ${inquiry.files}">
-                        <a href="#" th:data-url="@{/Users/parkheejun/NHNacademy/Spring/20240523/customerservice/uploads/{filename} (filename=${file.originalFilename})}" th:text="${file.originalFilename}" class="file-link"></a>
+                        <a href="#" th:data-url="@{/uploads/{filename} (filename=${file.originalFilename})}" th:text="${file.originalFilename}" class="file-link"></a>
                     </li>
                 </ul>
             </div>
