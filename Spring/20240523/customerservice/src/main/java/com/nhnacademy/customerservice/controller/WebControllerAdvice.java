@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.IOException;
+
 @ControllerAdvice
 @Slf4j
 public class WebControllerAdvice {
@@ -29,6 +31,14 @@ public class WebControllerAdvice {
         log.error("IllegalArgumentException", ex);
         model.addAttribute("message", ex.getMessage());
         model.addAttribute("status", HttpStatus.BAD_REQUEST);
+        return "error";
+    }
+
+    @ExceptionHandler(IOException.class)
+    public String handleIOException(IOException ex, Model model) {
+        log.error("IOException", ex);
+        model.addAttribute("message", ex.getMessage());
+        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
         return "error";
     }
 }

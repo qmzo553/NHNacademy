@@ -11,7 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static com.nhnacademy.customerservice.controller.AccountController.CUSTOMER_COOKIE_NAME;
@@ -25,9 +30,28 @@ public class CustomerController {
     private final InquiryRepository inquiryRepository;
     private final AnswerRepository answerRepository;
 
-    @GetMapping("/{id}")
-    public String index(@PathVariable String id, Model model) {
+    @GetMapping(value = "/{id}", params = "!{category}")
+    public String index(@PathVariable String id,
+                        Model model) {
         List<Inquiry> inquiryList = inquiryRepository.getInquiryListByCustomerId(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("inquiryList", inquiryList);
+        return "customer/index";
+    }
+
+    @GetMapping("/{id}")
+    public String categoryIndex(@PathVariable String id,
+                        @RequestParam("category") String category,
+                        Model model) {
+        List<Inquiry> inquiryList = null;
+        if(category.equals("ALL")) {
+            inquiryList = inquiryRepository.getInquiryListByCustomerId(id);
+        } else {
+            inquiryList = inquiryRepository.getInquiryListByCustomerIdAndCategory(id, category);
+        }
+
+        model.addAttribute("id", id);
         model.addAttribute("inquiryList", inquiryList);
         return "customer/index";
     }
@@ -41,19 +65,34 @@ public class CustomerController {
 
     @PostMapping("/inquiry")
     public String doInquiry(@Valid @ModelAttribute InquiryRequest inquiryRequest,
+                            @RequestParam("files") List<MultipartFile> files,
                             @CookieValue(value = LOGIN_COOKIE_NAME, required = false) String cookieId,
-                            BindingResult bindingResult) {
+                            BindingResult bindingResult) throws IOException {
         if(bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
-
         String id = cookieId.replace(CUSTOMER_COOKIE_NAME, "");
         Inquiry inquiry = Inquiry.create(inquiryRequest.getTitle(),
                 inquiryRequest.getContent(),
                 id,
-                Inquiry.Category.valueOf(inquiryRequest.getCategory()));
+                Inquiry.Category.valueOf(inquiryRequest.getCategory()),
+                files);
 
         inquiryRepository.saveInquiry(inquiry, id);
+
+        String uploadDirPath = System.getProperty("user.dir") + File.separator + "uploads";
+        File uploadDir = new File(uploadDirPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                Path filePath = Paths.get(uploadDirPath + File.separator + file.getOriginalFilename());
+                file.transferTo(filePath);
+            }
+        }
+
         return "redirect:/cs/" + id;
     }
 

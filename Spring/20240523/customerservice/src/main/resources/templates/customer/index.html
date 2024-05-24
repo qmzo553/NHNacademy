@@ -11,6 +11,22 @@
     <div class="mb-4">
         <a href="/cs/inquiry" class="btn btn-primary">문의하기</a>
     </div>
+
+    <form method="get" th:action="@{/cs/{id} (id = ${id})}">
+        <div class="form-group">
+            <label for="categoryFilter">카테고리 선택</label>
+            <select class="form-control" id="categoryFilter" name="category">
+                <option value="ALL">전체</option>
+                <option value="COMPLAINT">COMPLAINT</option>
+                <option value="SUGGESTION">SUGGESTION</option>
+                <option value="REFUND_EXCHANGE">REFUND_EXCHANGE</option>
+                <option value="PRAISE">PRAISE</option>
+                <option value="OTHER">OTHER</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">검색</button>
+    </form>
+
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
@@ -32,6 +48,7 @@
         </tr>
         </tbody>
     </table>
+    <a href="/cs/logout">로그아웃</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

@@ -28,8 +28,7 @@ public class AccountController {
                 String id = cookieId.replace(CUSTOMER_COOKIE_NAME, "");
                 return "redirect:/cs/" + id;
             } else if(cookieId.contains(MANAGER_COOKIE_NAME)) {
-                String id = cookieId.replace(MANAGER_COOKIE_NAME, "");
-                return "redirect:/cs/admin" + id;
+                return "redirect:/cs/admin/";
             }
         }
         return "login/loginForm";

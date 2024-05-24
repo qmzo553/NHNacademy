@@ -4,6 +4,41 @@
     <meta charset="UTF-8">
     <title>Inquiry Detail</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .image-popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        .image-popup-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        .image-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .image-popup-close:hover,
+        .image-popup-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -17,6 +52,15 @@
             <p><strong>작성날짜:</strong> <span th:text="${inquiry.createAt}">작성날짜</span></p>
             <p><strong>내용:</strong></p>
             <p th:text="${inquiry.content}">내용</p>
+
+            <div th:if="${inquiry.files != null && !inquiry.files.isEmpty()}">
+                <h4>첨부 파일:</h4>
+                <ul>
+                    <li th:each="file : ${inquiry.files}">
+                        <a href="#" th:data-url="@{/Users/parkheejun/NHNacademy/Spring/20240523/customerservice/uploads/{filename} (filename=${file.originalFilename})}" th:text="${file.originalFilename}" class="file-link"></a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -43,8 +87,39 @@
     <a href="/cs/admin/" class="btn btn-secondary mt-4">뒤로가기</a>
 </div>
 
+<div id="imagePopup" class="image-popup">
+    <span class="image-popup-close">&times;</span>
+    <img class="image-popup-content" id="imagePopupContent">
+</div>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const imagePopup = document.getElementById('imagePopup');
+        const imagePopupContent = document.getElementById('imagePopupContent');
+        const closeBtn = document.querySelector('.image-popup-close');
+
+        closeBtn.onclick = function() {
+            imagePopup.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target === imagePopup) {
+                imagePopup.style.display = "none";
+            }
+        }
+
+        document.querySelectorAll('.file-link').forEach(function(element) {
+            element.onclick = function(event) {
+                event.preventDefault();
+                const imageUrl = element.getAttribute('data-url');
+                imagePopupContent.src = imageUrl;
+                imagePopup.style.display = "block";
+            }
+        });
+    });
+</script>
 </body>
 </html>

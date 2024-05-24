@@ -3,8 +3,10 @@ package com.nhnacademy.customerservice.domain.inquiry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,10 +28,11 @@ public class Inquiry implements Comparable<Inquiry>{
     private LocalDateTime createAt;
     private String writerId;
     private Category category;
+    private List<MultipartFile> files;
     private boolean answerStatus;
 
-    public static Inquiry create(String title, String content, String writerId, Category category) {
-        return new Inquiry(++currentId, title, content, LocalDateTime.now(), writerId, category, false);
+    public static Inquiry create(String title, String content, String writerId, Category category, List<MultipartFile> files) {
+        return new Inquiry(++currentId, title, content, LocalDateTime.now(), writerId, category, files, false);
     }
 
     @Override

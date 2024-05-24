@@ -12,22 +12,27 @@ public class InquiryRepositoryImpl implements InquiryRepository {
     Map<String, List<Inquiry>> inquiryMap = new HashMap<>();
 
     public InquiryRepositoryImpl() {
-        inquiryMap.put("user", List.of(Inquiry.create("테스트", "테스트", "user", Inquiry.Category.OTHER)));
+        List<Inquiry> inquiryList = new ArrayList<>();
+        inquiryList.add(Inquiry.create("테스트", "테스트", "user", Inquiry.Category.OTHER, new ArrayList<>()));
+        inquiryMap.put("user", inquiryList);
     }
 
     @Override
     public List<Inquiry> getInquiryListByCustomerId(String customerId) {
-        List<Inquiry> inquiryList = inquiryMap.get(customerId);
-        if(inquiryList == null) {
-            return new ArrayList<>();
-        }
+        return inquiryMap.getOrDefault(customerId, new ArrayList<>());
+    }
 
-        return inquiryMap.get(customerId);
+    @Override
+    public List<Inquiry> getInquiryListByCustomerIdAndCategory(String customerId, String category) {
+        Inquiry.Category categoryEnum = Inquiry.Category.valueOf(category);
+        return getInquiryListByCustomerId(customerId).stream()
+                .filter(Inquiry -> Inquiry.getCategory().equals(categoryEnum))
+                .toList();
     }
 
     @Override
     public void saveInquiry(Inquiry inquiry, String customerId) {
-        if(inquiry == null) {
+        if (inquiry == null) {
             throw new InquiryNotFoundException();
         }
 
