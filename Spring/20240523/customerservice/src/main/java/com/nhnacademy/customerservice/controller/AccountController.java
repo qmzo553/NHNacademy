@@ -1,7 +1,5 @@
 package com.nhnacademy.customerservice.controller;
 
-import com.nhnacademy.customerservice.domain.user.Customer;
-import com.nhnacademy.customerservice.domain.user.Manager;
 import com.nhnacademy.customerservice.domain.user.User;
 import com.nhnacademy.customerservice.repository.user.UserRepository;
 import jakarta.servlet.http.Cookie;
@@ -38,21 +36,21 @@ public class AccountController {
     public String doLogin(@RequestParam("id") String id,
                           @RequestParam("pwd") String pwd,
                           HttpServletResponse response) {
-        if (userRepository.matches(id, pwd)) {
-            Cookie cookie = null;
-            User user = userRepository.getUser(id);
-
-            if(user instanceof Customer) {
-                cookie = new Cookie(LOGIN_COOKIE_NAME, CUSTOMER_COOKIE_NAME + id);
-                response.addCookie(cookie);
-                return "redirect:/cs/" + id;
-
-            } else if(user instanceof Manager) {
-                cookie = new Cookie(LOGIN_COOKIE_NAME, MANAGER_COOKIE_NAME + id);
-                response.addCookie(cookie);
-                return "redirect:/cs/admin/";
-            }
-        }
+//        if (userRepository.matches(id, pwd)) {
+//            Cookie cookie = null;
+//            User user = userRepository.getUser(id);
+//
+//            if(user instanceof Customer) {
+//                cookie = new Cookie(LOGIN_COOKIE_NAME, CUSTOMER_COOKIE_NAME + id);
+//                response.addCookie(cookie);
+//                return "redirect:/cs/" + id;
+//
+//            } else if(user instanceof Manager) {
+//                cookie = new Cookie(LOGIN_COOKIE_NAME, MANAGER_COOKIE_NAME + id);
+//                response.addCookie(cookie);
+//                return "redirect:/cs/admin/";
+//            }
+//        }
 
         return "redirect:/cs/login";
     }

@@ -2,9 +2,12 @@ package com.nhnacademy.customerservice.repository.user;
 
 import com.nhnacademy.customerservice.domain.user.User;
 
+import java.util.Optional;
+
 public interface UserRepository {
 
-    User getUser(String id);
-    boolean exists(String id);
-    boolean matches(String id, String password);
+    Optional<User> getUserByUserId(String userId);
+    Optional<User> getUserByUserIdAndPassword(String userId, String password);
+    int saveUser(User user);
+    int countByUserId(String userId);
 }

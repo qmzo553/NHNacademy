@@ -31,7 +31,7 @@ class AccountControllerTest {
     void login() throws Exception{
         mockMvc.perform(get("/cs/login"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("login/loginForm"));
+                .andExpect(view().name("getUserByUserIdAndPassword/loginForm"));
     }
 
     @Test
