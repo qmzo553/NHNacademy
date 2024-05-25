@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.nhnacademy.customerservice.controller.AccountController.CUSTOMER_COOKIE_NAME;
+import static com.nhnacademy.customerservice.controller.AccountController.USER_COOKIE_NAME;
 import static com.nhnacademy.customerservice.controller.AccountController.LOGIN_COOKIE_NAME;
 
 @Controller

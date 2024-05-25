@@ -3,9 +3,11 @@ package com.nhnacademy.customerservice.interceptor;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 public class DbConnectionInterceptor implements HandlerInterceptor {
 
     @Override

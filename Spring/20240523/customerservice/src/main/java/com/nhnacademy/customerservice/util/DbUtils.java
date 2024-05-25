@@ -1,12 +1,10 @@
 package com.nhnacademy.customerservice.util;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import javax.sql.DataSource;
-import java.time.Duration;
 
 public class DbUtils {
-
     public DbUtils(){
         throw new IllegalStateException("Utility class");
     }

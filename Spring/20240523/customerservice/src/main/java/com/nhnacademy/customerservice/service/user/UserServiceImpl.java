@@ -4,7 +4,9 @@ import com.nhnacademy.customerservice.domain.user.User;
 import com.nhnacademy.customerservice.exception.UserNotFoundException;
 import com.nhnacademy.customerservice.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -24,8 +26,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User doLogin(User user) {
-        return userRepository.getUserByUserIdAndPassword(user.getId(), user.getPassword())
-                .orElseThrow(UserNotFoundException::new);
+    public boolean doLogin(String userId, String password) {
+        if(userId == null || userId.isEmpty() || password == null || password.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        return userRepository.getUserByUserIdAndPassword(userId, password).isPresent();
     }
 }

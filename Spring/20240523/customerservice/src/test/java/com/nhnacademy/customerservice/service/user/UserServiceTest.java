@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -44,15 +45,17 @@ class UserServiceTest {
     @DisplayName("login")
     void login() {
         when(userRepository.getUserByUserIdAndPassword(anyString(), anyString())).thenReturn(Optional.of(testUser));
-        User user = userService.doLogin(testUser);
+        boolean user = userService.doLogin(testUser.getId(), testUser.getPassword());
         Mockito.verify(userRepository, Mockito.times(1)).getUserByUserIdAndPassword(anyString(), anyString());
-        Assertions.assertEquals(user, testUser);
+        Assertions.assertTrue(user);
+
+        assertThrows(IllegalArgumentException.class, () -> userService.doLogin(null, null));
     }
 
     @Test
     @DisplayName("fail get user with exception")
     void exception() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userService.getUser(""));
-        Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUser("123"));
+        assertThrows(IllegalArgumentException.class, () -> userService.getUser(""));
+        assertThrows(UserNotFoundException.class, () -> userService.getUser("123"));
     }
 }

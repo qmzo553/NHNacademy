@@ -14,6 +14,7 @@ class UserRepositoryTest {
     @BeforeEach
     void setUp() {
         DbConnectionThreadLocal.initialize();
+        testUser = User.createUser("test", "123", "user", 11, "01012341234", "c@c");
         userRepository.saveUser(testUser);
     }
 

@@ -1,6 +1,6 @@
 package com.nhnacademy.customerservice.controller;
 
-import com.nhnacademy.customerservice.repository.user.UserRepository;
+import com.nhnacademy.customerservice.service.user.UserService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,13 +17,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AccountControllerTest {
 
     @MockBean
-    private UserRepository userRepository;
+    private UserService userService;
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new AccountController(userRepository)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new AccountController(userService)).build();
     }
 
     @Test

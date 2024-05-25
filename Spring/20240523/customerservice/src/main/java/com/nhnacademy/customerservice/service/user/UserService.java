@@ -5,5 +5,5 @@ import com.nhnacademy.customerservice.domain.user.User;
 public interface UserService {
 
     User getUser(String userId);
-    User doLogin(User user);
+    boolean doLogin(String userId, String password);
 }

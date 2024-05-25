@@ -2,6 +2,7 @@ package com.nhnacademy.customerservice.transaction;
 
 import com.nhnacademy.customerservice.util.DbUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -9,16 +10,19 @@ import java.sql.SQLException;
 
 import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
 
+@Component
 @Slf4j
 public class DbConnectionThreadLocal {
     private static final ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<Boolean> sqlErrorThreadLocal = ThreadLocal.withInitial(()->false);
 
+    private static DataSource dataSource;
+
     public static void initialize(){
 
         try {
             // connection pool에서 connectionThreadLocal에 connection을 할당합니다.
-            DataSource dataSource = DbUtils.getDataSource();
+            dataSource = DbUtils.getDataSource();
             Connection connection = dataSource.getConnection();
             connectionThreadLocal.set(connection);
 
@@ -28,7 +32,7 @@ public class DbConnectionThreadLocal {
             // auto commit 을 false로 설정합니다.
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
