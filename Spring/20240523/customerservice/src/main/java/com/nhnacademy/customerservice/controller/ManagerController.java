@@ -25,15 +25,15 @@ public class ManagerController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Inquiry> noAnswerYetList = inquiryRepository.getNoAnswerYet();
-        model.addAttribute("inquiryList", noAnswerYetList);
+//        List<Inquiry> noAnswerYetList = inquiryRepository.getNoAnswerYet();
+//        model.addAttribute("inquiryList", noAnswerYetList);
         return "manager/index";
     }
 
     @GetMapping("/answer/{inquiryId}")
     public String answer(@PathVariable Long inquiryId, Model model) {
-        Inquiry inquiry = inquiryRepository.getInquiryById(inquiryId);
-        model.addAttribute("inquiry", inquiry);
+//        Inquiry inquiry = inquiryRepository.getInquiryById(inquiryId);
+//        model.addAttribute("inquiry", inquiry);
         return "manager/inquiry_answer";
     }
 

@@ -44,6 +44,8 @@ class AnswerServiceTest {
     @Test
     @DisplayName("save answer")
     void save() {
-
+        when(answerRepository.saveAnswer(any(Answer.class))).thenReturn(1);
+        answerService.saveAnswer(testAnswer);
+        verify(answerRepository, times(1)).saveAnswer(any(Answer.class));
     }
 }

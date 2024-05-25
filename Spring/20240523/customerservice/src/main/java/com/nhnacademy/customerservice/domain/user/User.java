@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class User {
     public enum Role {
-        USER, ADMIN
+        USER, MANAGER
     }
 
     private String id;
@@ -22,8 +22,8 @@ public class User {
         return new User(id, password, name, age, Role.USER, phone, email);
     }
 
-    public static User createAdmin(String id, String password, String name, int age, String phone, String email) {
-        return new User(id, password, name, age, Role.ADMIN, phone, email);
+    public static User createManger(String id, String password, String name, int age, String phone, String email) {
+        return new User(id, password, name, age, Role.MANAGER, phone, email);
     }
 
     @Override

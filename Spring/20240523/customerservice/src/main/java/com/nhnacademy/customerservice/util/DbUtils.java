@@ -7,8 +7,6 @@ import java.time.Duration;
 
 public class DbUtils {
 
-
-
     public DbUtils(){
         throw new IllegalStateException("Utility class");
     }
@@ -33,7 +31,7 @@ public class DbUtils {
         // Validation Query를 설정하세요
         basicDataSource.setValidationQuery("select 1");
         basicDataSource.setTestOnBorrow(true);
-        basicDataSource.setMaxWait(Duration.ofSeconds(2));
+        basicDataSource.setMaxWaitMillis(2000);
 
         // 적절히 변경하세요
         DATASOURCE = basicDataSource;
