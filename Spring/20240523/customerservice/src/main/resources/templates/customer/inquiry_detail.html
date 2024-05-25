@@ -53,14 +53,14 @@
             <p><strong>내용:</strong></p>
             <p th:text="${inquiry.content}">내용</p>
 
-            <div th:if="${inquiry.files != null && !inquiry.files.isEmpty()}">
-                <h4>첨부 파일:</h4>
-                <ul>
-                    <li th:each="file : ${inquiry.files}">
-                        <a href="#" target="_blank" th:data-url="@{/src/main/resources/uploads/{filename} (filename=${file.originalFilename})}" th:text="${file.originalFilename}" class="file-link"></a>
-                    </li>
-                </ul>
-            </div>
+<!--            <div th:if="${inquiry.files != null && !inquiry.files.isEmpty()}">-->
+<!--                <h4>첨부 파일:</h4>-->
+<!--                <ul>-->
+<!--                    <li th:each="file : ${inquiry.files}">-->
+<!--                        <a href="#" target="_blank" th:data-url="@{/src/main/resources/uploads/{filename} (filename=${file.originalFilename})}" th:text="${file.originalFilename}" class="file-link"></a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
     </div>
 
@@ -79,39 +79,8 @@
     <a th:href="@{'/cs/' + ${id}}" class="btn btn-secondary mt-4">뒤로가기</a>
 </div>
 
-<div id="imagePopup" class="image-popup">
-    <span class="image-popup-close">&times;</span>
-    <img class="image-popup-content" id="imagePopupContent">
-</div>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const imagePopup = document.getElementById('imagePopup');
-        const imagePopupContent = document.getElementById('imagePopupContent');
-        const closeBtn = document.querySelector('.image-popup-close');
-
-        closeBtn.onclick = function() {
-            imagePopup.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target === imagePopup) {
-                imagePopup.style.display = "none";
-            }
-        }
-
-        document.querySelectorAll('.file-link').forEach(function(element) {
-            element.onclick = function(event) {
-                event.preventDefault();
-                const imageUrl = element.getAttribute('data-url');
-                imagePopupContent.src = imageUrl;
-                imagePopup.style.display = "block";
-            }
-        });
-    });
-</script>
 </body>
 </html>

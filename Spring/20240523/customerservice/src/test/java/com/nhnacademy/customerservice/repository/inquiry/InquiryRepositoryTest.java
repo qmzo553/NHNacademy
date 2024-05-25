@@ -57,6 +57,14 @@ class InquiryRepositoryTest {
     }
 
     @Test
+    @DisplayName("update inquiry")
+    void update() {
+        testInquiry.setAnswerStatus(true);
+        int result = inquiryRepository.updateInquiry(testInquiry);
+        Assertions.assertEquals(1, result);
+    }
+
+    @Test
     @DisplayName("get last inquiry id")
     void getLastInquiryId() {
         long result = inquiryRepository.getLastInquiryId();

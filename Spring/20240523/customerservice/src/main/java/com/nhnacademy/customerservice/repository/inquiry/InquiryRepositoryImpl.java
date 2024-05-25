@@ -30,7 +30,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                         rs.getString("inquiry_content"),
                         rs.getTimestamp("inquiry_createdAt").toLocalDateTime(),
                         rs.getString("inquiry_writerId"),
-                        Inquiry.Category.valueOf(rs.getString("inquiry_category"))
+                        Inquiry.Category.valueOf(rs.getString("inquiry_category")),
+                        rs.getBoolean("inquiry_answerStatus")
                 ));
             }
 
@@ -58,7 +59,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                         rs.getString("inquiry_content"),
                         rs.getTimestamp("inquiry_createdAt").toLocalDateTime(),
                         rs.getString("inquiry_writerId"),
-                        Inquiry.Category.valueOf(rs.getString("inquiry_category"))
+                        Inquiry.Category.valueOf(rs.getString("inquiry_category")),
+                        rs.getBoolean("inquiry_answerStatus")
                 ));
             }
         } catch (SQLException e) {
@@ -86,7 +88,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                         rs.getString("inquiry_content"),
                         rs.getTimestamp("inquiry_createdAt").toLocalDateTime(),
                         rs.getString("inquiry_writerId"),
-                        Inquiry.Category.valueOf(rs.getString("inquiry_category"))
+                        Inquiry.Category.valueOf(rs.getString("inquiry_category")),
+                        rs.getBoolean("inquiry_answerStatus")
                 ));
             }
         } catch (SQLException e) {
@@ -99,7 +102,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
     @Override
     public int saveInquiry(Inquiry inquiry) {
         Connection connection = DbConnectionThreadLocal.getConnection();
-        String sql = "INSERT INTO cs_inquiries (inquiry_title, inquiry_content, inquiry_createdAt, inquiry_writerId, inquiry_category) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cs_inquiries (inquiry_title, inquiry_content, inquiry_createdAt, inquiry_writerId, inquiry_category, inquiry_answerStatus) VALUES (?, ?, ?, ?, ?, ?)";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, inquiry.getTitle());
@@ -107,10 +110,30 @@ public class InquiryRepositoryImpl implements InquiryRepository {
             preparedStatement.setString(3, inquiry.getCreateAt().toString());
             preparedStatement.setString(4, inquiry.getWriterId());
             preparedStatement.setString(5, inquiry.getCategory().name());
+            preparedStatement.setBoolean(6, inquiry.isAnswerStatus());
 
             int result = preparedStatement.executeUpdate();
             return result;
         } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int updateInquiry(Inquiry inquiry) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        String sql = "UPDATE cs_inquiries SET inquiry_title = ?, inquiry_content = ?, inquiry_writerId = ?, inquiry_answerStatus = ? WHERE inquiry_id = ?";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, inquiry.getTitle());
+            preparedStatement.setString(2, inquiry.getContent());
+            preparedStatement.setString(3, inquiry.getWriterId());
+            preparedStatement.setBoolean(4, inquiry.isAnswerStatus());
+            preparedStatement.setLong(5, inquiry.getInquiryId());
+
+            int result = preparedStatement.executeUpdate();
+            return result;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -4,7 +4,9 @@ import com.nhnacademy.customerservice.domain.answer.Answer;
 import com.nhnacademy.customerservice.exception.AnswerNotFoundException;
 import com.nhnacademy.customerservice.repository.answer.AnswerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class AnswerServiceImpl implements AnswerService {
 

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cs")
 public class AccountController {
 
-    public static final String USER_COOKIE_NAME = "user";
-    public static final String MANAGER_COOKIE_NAME = "manager";
+    public static final String USER_COOKIE_NAME = "user_";
+    public static final String MANAGER_COOKIE_NAME = "manager_";
     public static final String LOGIN_COOKIE_NAME = "SESSION";
     private final UserService userService;
 

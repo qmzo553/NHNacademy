@@ -79,4 +79,14 @@ class InquiryServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> inquiryService.saveInquiry(null));
     }
+
+    @Test
+    @DisplayName("update inquiry")
+    void updateInquiry() {
+        when(inquiryRepository.updateInquiry(any(Inquiry.class))).thenReturn(1);
+        inquiryService.updateInquiry(testInquiry);
+        verify(inquiryRepository, times(1)).updateInquiry(any());
+
+        assertThrows(IllegalArgumentException.class, () -> inquiryService.updateInquiry(null));
+    }
 }

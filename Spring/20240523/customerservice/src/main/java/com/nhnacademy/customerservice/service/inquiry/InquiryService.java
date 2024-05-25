@@ -11,4 +11,5 @@ public interface InquiryService {
     Inquiry getInquiryByInquiryId(long inquiryId);
     List<Inquiry> getNoAnswerYet();
     void saveInquiry(Inquiry inquiry);
+    void updateInquiry(Inquiry inquiry);
 }

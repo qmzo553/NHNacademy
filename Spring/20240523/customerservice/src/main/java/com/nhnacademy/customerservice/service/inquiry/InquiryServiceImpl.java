@@ -20,7 +20,7 @@ public class InquiryServiceImpl implements InquiryService {
             throw new IllegalArgumentException();
         }
 
-        return inquiryRepository.getInquiriesByUserId(userId);
+        return inquiryRepository.getInquiriesByUserId(userId).reversed();
     }
 
     @Override
@@ -33,7 +33,8 @@ public class InquiryServiceImpl implements InquiryService {
         List<Inquiry> inquiries = getInquiriesByUserId(userId);
         return inquiries.stream()
                 .filter(Inquiry -> Inquiry.getCategory().equals(categoryEnum))
-                .toList();
+                .toList()
+                .reversed();
     }
 
     @Override
@@ -57,5 +58,14 @@ public class InquiryServiceImpl implements InquiryService {
         }
 
         inquiryRepository.saveInquiry(inquiry);
+    }
+
+    @Override
+    public void updateInquiry(Inquiry inquiry) {
+        if (inquiry == null) {
+            throw new IllegalArgumentException();
+        }
+
+        inquiryRepository.updateInquiry(inquiry);
     }
 }

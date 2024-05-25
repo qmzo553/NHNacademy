@@ -11,5 +11,6 @@ public interface InquiryRepository {
     Optional<Inquiry> getInquiryByInquiryId(Long inquiryId);
     List<Inquiry> getInquiriesNoAnswerYet();
     int saveInquiry(Inquiry inquiry);
+    int updateInquiry(Inquiry inquiry);
     long getLastInquiryId();
 }
