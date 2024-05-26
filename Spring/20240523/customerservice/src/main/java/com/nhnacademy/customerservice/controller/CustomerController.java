@@ -88,7 +88,7 @@ public class CustomerController {
             Files.createDirectory(uploadDir);
         }
 
-        if (files != null && !files.isEmpty()) {
+        if (files != null && !files.getFirst().getOriginalFilename().equals("")) {
             for (MultipartFile file : files) {
                 file.transferTo(Paths.get(UPLOAD_DIR + file.getOriginalFilename()));
             }
