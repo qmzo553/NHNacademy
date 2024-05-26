@@ -1,30 +1,40 @@
 package com.nhnacademy.customerservice.repository.inquiry;
 
+import com.nhnacademy.customerservice.config.DataSourceConfig;
 import com.nhnacademy.customerservice.domain.inquiry.Inquiry;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {DataSourceConfig.class, InquiryRepositoryImpl.class, DbConnectionThreadLocal.class})
 class InquiryRepositoryTest {
 
-    private  InquiryRepository inquiryRepository;
+    @Autowired
+    private InquiryRepository inquiryRepository;
+
+    @Autowired
+    private DbConnectionThreadLocal dbConnectionThreadLocal;
 
     Inquiry testInquiry;
 
     @BeforeEach
     void setUp() {
-        DbConnectionThreadLocal.initialize();
-        inquiryRepository = new InquiryRepositoryImpl();
+        dbConnectionThreadLocal.initialize();
         long inquiryId = inquiryRepository.getLastInquiryId();
         testInquiry = inquiryRepository.getInquiryByInquiryId(inquiryId).get();
     }
 
     @AfterEach
     void tearDown() {
-        DbConnectionThreadLocal.setSqlError(true);
-        DbConnectionThreadLocal.reset();
+        dbConnectionThreadLocal.setSqlError(true);
+        dbConnectionThreadLocal.reset();
     }
 
     @Test

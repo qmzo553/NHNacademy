@@ -1,30 +1,40 @@
 package com.nhnacademy.customerservice.repository.file;
 
+import com.nhnacademy.customerservice.config.DataSourceConfig;
 import com.nhnacademy.customerservice.domain.file.File;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {DataSourceConfig.class, FileRepositoryImpl.class, DbConnectionThreadLocal.class})
 class FileRepositoryTest {
 
+    @Autowired
+    private DbConnectionThreadLocal dbConnectionThreadLocal;
+
+    @Autowired
     private FileRepository fileRepository;
     File testFile;
 
     @BeforeEach
     void setUp() {
-        DbConnectionThreadLocal.initialize();
-        fileRepository = new FileRepositoryImpl();
+        dbConnectionThreadLocal.initialize();
         testFile = File.create("test", 1);
         fileRepository.save(testFile);
     }
 
     @AfterEach
     void tearDown() {
-        DbConnectionThreadLocal.setSqlError(true);
-        DbConnectionThreadLocal.reset();
+        dbConnectionThreadLocal.setSqlError(true);
+        dbConnectionThreadLocal.reset();
     }
 
     @Test

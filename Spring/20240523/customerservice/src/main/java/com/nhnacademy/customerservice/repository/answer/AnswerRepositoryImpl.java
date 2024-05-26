@@ -2,6 +2,7 @@ package com.nhnacademy.customerservice.repository.answer;
 
 import com.nhnacademy.customerservice.domain.answer.Answer;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -11,11 +12,14 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class AnswerRepositoryImpl implements AnswerRepository {
+
+    private final DbConnectionThreadLocal dbConnectionThreadLocal;
 
     @Override
     public Optional<Answer> getAnswerByInquiryId(long inquiryId) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT * FROM cs_answers WHERE inquiry_id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -30,6 +34,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                         rs.getTimestamp("answer_createdAt").toLocalDateTime()
                 ));
             }
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -39,7 +44,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
     @Override
     public int saveAnswer(Answer answer) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "INSERT INTO cs_answers (inquiry_id, writer_id, answer_content, answer_createdAt) VALUES (?, ?, ?, ?)";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -57,7 +62,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
     @Override
     public int countByInquiryId(long inquiryId) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT COUNT(*) FROM cs_answers WHERE inquiry_id = ?";
         int count = 0;
 
@@ -68,6 +73,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
             if(rs.next()) {
                 count = rs.getInt(1);
             }
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

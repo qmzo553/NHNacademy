@@ -1,27 +1,38 @@
 package com.nhnacademy.customerservice.repository.user;
 
+import com.nhnacademy.customerservice.config.DataSourceConfig;
 import com.nhnacademy.customerservice.domain.user.User;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {DataSourceConfig.class, UserRepositoryImpl.class, DbConnectionThreadLocal.class})
 class UserRepositoryTest {
 
-    UserRepository userRepository = new UserRepositoryImpl();
+    @Autowired
+    private DbConnectionThreadLocal dbConnectionThreadLocal;
+
+    @Autowired
+    private UserRepository userRepository;
     User testUser;
 
     @BeforeEach
     void setUp() {
-        DbConnectionThreadLocal.initialize();
+        dbConnectionThreadLocal.initialize();
         testUser = User.createUser("test", "123", "user", 11, "01012341234", "c@c");
         userRepository.saveUser(testUser);
     }
 
     @AfterEach
     void tearDown() {
-        DbConnectionThreadLocal.setSqlError(true);
-        DbConnectionThreadLocal.reset();
+        dbConnectionThreadLocal.setSqlError(true);
+        dbConnectionThreadLocal.reset();
     }
 
     @Test

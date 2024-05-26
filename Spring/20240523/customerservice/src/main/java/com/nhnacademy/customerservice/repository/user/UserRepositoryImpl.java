@@ -3,6 +3,7 @@ package com.nhnacademy.customerservice.repository.user;
 import com.nhnacademy.customerservice.domain.user.User;
 import com.nhnacademy.customerservice.exception.UserNotFoundException;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -14,11 +15,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
+
+    private final DbConnectionThreadLocal dbConnectionThreadLocal;
 
     @Override
     public Optional<User> getUserByUserId(String userId) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT * FROM cs_users WHERE user_id = ?";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -47,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> getUserByUserIdAndPassword(String userId, String password) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT * FROM cs_users WHERE user_id = ? AND user_password = ?";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -66,6 +70,8 @@ public class UserRepositoryImpl implements UserRepository {
                         rs.getString("user_email")
                 ));
             }
+
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +81,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int saveUser(User user) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "INSERT INTO cs_users (user_id, user_password, user_name, user_age, user_role, user_phone, user_email) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -96,7 +102,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public int countByUserId(String userId) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT COUNT(*) FROM cs_users WHERE user_id = ?";
         int count = 0;
 
@@ -107,6 +113,8 @@ public class UserRepositoryImpl implements UserRepository {
             if (rs.next()) {
                 count = rs.getInt(1);
             }
+
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

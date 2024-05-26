@@ -2,6 +2,7 @@ package com.nhnacademy.customerservice.repository.file;
 
 import com.nhnacademy.customerservice.domain.file.File;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -12,11 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class FileRepositoryImpl implements FileRepository {
+
+    private final DbConnectionThreadLocal dbConnectionThreadLocal;
 
     @Override
     public List<File> getFilesByInquiryId(long inquiryId) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "select * from cs_files where file_inquiryId = ?";
         List<File> files = new ArrayList<>();
 
@@ -40,7 +44,7 @@ public class FileRepositoryImpl implements FileRepository {
 
     @Override
     public int save(File file) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "insert into cs_files (file_name, file_inquiryId) values (?, ?)";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

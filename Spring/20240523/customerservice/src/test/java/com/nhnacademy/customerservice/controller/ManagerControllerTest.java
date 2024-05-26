@@ -10,10 +10,13 @@ import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -23,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ManagerController.class)
+@SpringBootTest
 class ManagerControllerTest {
 
     private MockMvc mockMvc;
@@ -41,7 +44,7 @@ class ManagerControllerTest {
     private Answer testAnswer;
 
     @BeforeEach
-    void setUp() {
+    void setUp(@Autowired WebApplicationContext context) {
         testInquiry = Inquiry.create(1L, "test", "test", "user", Inquiry.Category.OTHER);
         testAnswer = Answer.create(1L, "manager", "test");
         mockMvc = MockMvcBuilders.standaloneSetup(new ManagerController(inquiryService, answerService, fileService)).build();

@@ -1,7 +1,6 @@
 package com.nhnacademy.customerservice.transaction;
 
-import com.nhnacademy.customerservice.util.DbUtils;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -11,18 +10,17 @@ import java.sql.SQLException;
 import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
 
 @Component
-@Slf4j
+@RequiredArgsConstructor
 public class DbConnectionThreadLocal {
     private static final ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<Boolean> sqlErrorThreadLocal = ThreadLocal.withInitial(()->false);
 
-    private static DataSource dataSource;
+    private final DataSource dataSource;
 
-    public static void initialize(){
+    public void initialize(){
 
         try {
             // connection pool에서 connectionThreadLocal에 connection을 할당합니다.
-            dataSource = DbUtils.getDataSource();
             Connection connection = dataSource.getConnection();
             connectionThreadLocal.set(connection);
 
@@ -36,19 +34,19 @@ public class DbConnectionThreadLocal {
         }
     }
 
-    public static Connection getConnection(){
+    public Connection getConnection(){
         return connectionThreadLocal.get();
     }
 
-    public static void setSqlError(boolean sqlError){
+    public void setSqlError(boolean sqlError){
         sqlErrorThreadLocal.set(sqlError);
     }
 
-    public static boolean getSqlError(){
+    public boolean getSqlError(){
         return sqlErrorThreadLocal.get();
     }
 
-    public static void reset() {
+    public void reset() {
 
         try {
             // 사용이 완료된 connection은 close를 호출하여 connection pool에 반환합니다.
@@ -63,7 +61,7 @@ public class DbConnectionThreadLocal {
 
             // 현재 사용하고 있는 connection을 재 사용할 수 없도록 connectionThreadLocal을 초기화 합니다.
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } finally {
             sqlErrorThreadLocal.remove();
             connectionThreadLocal.remove();

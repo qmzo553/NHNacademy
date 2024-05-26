@@ -2,6 +2,7 @@ package com.nhnacademy.customerservice.repository.inquiry;
 
 import com.nhnacademy.customerservice.domain.inquiry.Inquiry;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -11,11 +12,14 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Repository
+@RequiredArgsConstructor
 public class InquiryRepositoryImpl implements InquiryRepository {
+
+    private final DbConnectionThreadLocal dbConnectionThreadLocal;
 
     @Override
     public List<Inquiry> getInquiriesByUserId(String userId) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT * FROM cs_inquiries WHERE inquiry_writerId = ?";
         List<Inquiry> inquiries = new ArrayList<>();
 
@@ -45,7 +49,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     @Override
     public Optional<Inquiry> getInquiryByInquiryId(Long inquiryId) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT * FROM cs_inquiries WHERE inquiry_id = ?";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -63,6 +67,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                         rs.getBoolean("inquiry_answerStatus")
                 ));
             }
+
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -71,7 +77,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     @Override
     public List<Inquiry> getInquiriesNoAnswerYet() {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT * " +
                 "FROM cs_inquiries i " +
                 "LEFT JOIN cs_answers a ON i.inquiry_id = a.inquiry_id " +
@@ -92,6 +98,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                         rs.getBoolean("inquiry_answerStatus")
                 ));
             }
+
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -101,7 +109,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     @Override
     public int saveInquiry(Inquiry inquiry) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "INSERT INTO cs_inquiries (inquiry_title, inquiry_content, inquiry_createdAt, inquiry_writerId, inquiry_category, inquiry_answerStatus) VALUES (?, ?, ?, ?, ?, ?)";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -121,7 +129,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     @Override
     public int updateInquiry(Inquiry inquiry) {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "UPDATE cs_inquiries SET inquiry_title = ?, inquiry_content = ?, inquiry_writerId = ?, inquiry_answerStatus = ? WHERE inquiry_id = ?";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -140,7 +148,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     @Override
     public long getLastInquiryId() {
-        Connection connection = DbConnectionThreadLocal.getConnection();
+        Connection connection = dbConnectionThreadLocal.getConnection();
         String sql = "SELECT max(inquiry_id) FROM cs_inquiries";
         long inquiryId = 0;
 
@@ -149,6 +157,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
             if(rs.next()) {
                 inquiryId = rs.getLong(1);
             }
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
