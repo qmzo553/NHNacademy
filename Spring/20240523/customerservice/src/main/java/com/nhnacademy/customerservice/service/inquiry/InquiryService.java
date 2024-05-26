@@ -10,6 +10,7 @@ public interface InquiryService {
     List<Inquiry> getInquiriesByUserIdAndCategory(String userId, String category);
     Inquiry getInquiryByInquiryId(long inquiryId);
     List<Inquiry> getNoAnswerYet();
+    long getLastInquiryId();
     void saveInquiry(Inquiry inquiry);
     void updateInquiry(Inquiry inquiry);
 }

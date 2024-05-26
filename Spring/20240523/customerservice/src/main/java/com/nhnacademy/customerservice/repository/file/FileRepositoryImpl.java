@@ -2,6 +2,7 @@ package com.nhnacademy.customerservice.repository.file;
 
 import com.nhnacademy.customerservice.domain.file.File;
 import com.nhnacademy.customerservice.transaction.DbConnectionThreadLocal;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class FileRepositoryImpl implements FileRepository {
 
     @Override

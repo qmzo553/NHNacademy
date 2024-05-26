@@ -53,16 +53,16 @@
             <p><strong>내용:</strong></p>
             <p th:text="${inquiry.content}">내용</p>
 
-<!--            <div th:if="${inquiry.files != null && !inquiry.files.isEmpty()}">-->
-<!--                <h4>첨부 파일:</h4>-->
-<!--                <ul>-->
-<!--                    <li th:each="file : ${inquiry.files}">-->
-<!--                        <a th:href="@{'/upload/' + ${file.getOriginalFilename()}}" target="_blank">-->
-<!--                            <span th:text="${file.getOriginalFilename()}"></span>-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
+            <div th:if="${files != null && !files.isEmpty()}">
+                <h4>첨부 파일:</h4>
+                <ul>
+                    <li th:each="file : ${files}">
+                        <a th:href="@{'/uploads/' + ${file.getFileName()}}" target="_blank">
+                            <span th:text="${file.getFileName()}"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 

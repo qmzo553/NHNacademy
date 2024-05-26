@@ -52,6 +52,11 @@ public class InquiryServiceImpl implements InquiryService {
     }
 
     @Override
+    public long getLastInquiryId() {
+        return inquiryRepository.getLastInquiryId();
+    }
+
+    @Override
     public void saveInquiry(Inquiry inquiry) {
         if (inquiry == null) {
             throw new IllegalArgumentException();

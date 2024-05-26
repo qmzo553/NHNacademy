@@ -71,6 +71,14 @@ class InquiryServiceTest {
     }
 
     @Test
+    @DisplayName("get last inquiry id")
+    void getLastInquiryId() {
+        when(inquiryRepository.getLastInquiryId()).thenReturn(2L);
+        inquiryService.getLastInquiryId();
+        verify(inquiryRepository, times(1)).getLastInquiryId();
+    }
+
+    @Test
     @DisplayName("save inquiry")
     void saveInquiry() {
         when(inquiryRepository.saveInquiry(any(Inquiry.class))).thenReturn(1);
